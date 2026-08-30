@@ -6,15 +6,31 @@
     <title>Destinos: Введение (Сцена 1)</title>
     <!-- ЕДИНАЯ ССЫЛКА НА ФАЙЛ СТИЛЕЙ -->
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Добавляем стили прямо сюда, чтобы отцентрировать видео -->
+    <style>
+        .video-container {
+            display: flex;
+            justify-content: center; /* Центрирует видео по горизонтали */
+            align-items: center;     /* Центрирует видео по вертикали (если контейнер высокий) */
+            margin: 20px 0;          /* Добавляет отступы сверху и снизу от видео */
+            width: 100%;             /* Контейнер занимает всю ширину текста */
+        }
+    </style>
 </head>
 <body>
 
 <div class="container">
-<video width="640" height="360" controls>
-  <source src="https://archive.org/download/destinos_pbs/DESTINOS_01.mp4" type="video/mp4">
-  Ваш браузер не поддерживает тег video. Пожалуйста, обновите браузер или скачайте видео.
-</video>
+    
+    <!-- Оборачиваем видео в новый div с классом video-container -->
+    <div class="video-container">
+        <video width="640" height="360" controls>
+          <source src="https://archive.org/download/destinos_pbs/DESTINOS_01.mp4" type="video/mp4">
+          Ваш браузер не поддерживает тег video. Пожалуйста, обновите браузер или скачайте видео.
+        </video>
     </div>
+    
+</div>
 
 </body>
 </html>
