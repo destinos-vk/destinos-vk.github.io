@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бесконечная прокрутка</title>
+    <style>
+        /* Базовые стили для красоты страницы */
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Контейнер, где будет появляться текст */
+        #content-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        /* Стили для каждого отдельного блока текста (секции) */
+        .text-section {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* Стиль для индикатора загрузки (колесо или текст) */
+        #loading-indicator {
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+            color: #777;
+            /* Изначально скрыт, появляется только в момент загрузки */
+            opacity: 0; 
+            transition: opacity 0.3s ease;
+        }
+
+        /* Элемент-сенсор (наблюдатель), который отслеживает прокрутку */
+        #scroll-observer {
+            height: 10px; /* Он маленький и незаметный */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="content-container">
+        <!-- Здесь уже есть первая порция текста при загрузке страницы -->
+        <div class="text-section">
+            <h2>Часть 1: Начало истории</h2>
+            <p>Добро пожаловать в первую часть нашего длинного текста. Вы читаете начало истории. Дон Фернандо Кастильо Сааведра покинул родную Испанию после окончания Гражданской войны. Теперь он стар, тяжело болен и удалился в своё загородное поместье, понимая, что его жизнь подходит к концу.</p>
+            <p>Но прошлое дона Фернандо вновь напомнило о себе — из Испании пришло письмо.</p>
+        </div>
+        <!-- Сюда JavaScript будет добавлять новые блоки -->
+    </div>
+
+    <!-- Индикатор загрузки (показывается, пока ждем текст) -->
+    <div id="loading-indicator">Загрузка следующей части...</div>
+    
+    <!-- Сенсор, который включает загрузку, когда мы докручиваем до него -->
+    <div id="scroll-observer"></div>
+
+    <script>
+        // === 1. База данных текста (Имитация того, что лежит на сервере) ===
+        // В реальном проекте этот текст будет подгружаться из разных файлов или базы данных.
+        const textData = [
+            `<h2>Часть 2: Расследование</h2>
+             <p>Ракель начинает своё расследование в Севилье. Однако первые расспросы не дают никаких результатов. Во время пребывания в Севилье Ракель неожиданно отвлекается от расследования и оказывается втянута в погоню за мальчиком и его собакой.</p>
+             <p>Вскоре Ракель выясняет, что ей необходимо отправиться в Мадрид.</p>`,
+
+            `<h2>Часть 3: Новые улики</h2>
+             <p>В Мадриде ей удаётся найти сведения, ради которых её отправили на поиски. Полученные сведения приводят Ракель в Южную Америку — в Буэнос-Айрес, столицу Аргентины.</p>
+             <p>В этом космополитичном городе Ракель делает неожиданное открытие.</p>`,
+
+            `<h2>Часть 4: Карибское море</h2>
+             <p>В её руки попадает ещё одно письмо. Именно оно приводит Ракель на залитый солнцем остров Пуэрто-Рико. В Сан-Хуане Ракель знакомится с молодой женщиной, которой предстоит сыграть важную роль.</p>
+             <p>Вместе они обнаруживают ещё один фрагмент прошлого в сундуке моряка.</p>`,
+             
+             `<h2>Часть 5: Возвращение в Мексику</h2>
+             <p>Наконец след вновь приводит в Мексику. Ракель оказывается перед лицом серьёзного испытания, угрожающего жизни молодого человека.</p>
+             <p>Она не знает, успеет ли вернуться и снова увидеть дона Фернандо, пока ещё не стало слишком поздно.</p>`
+        ];
+
+        let currentIndex = 0; // Счетчик: какую часть текста нужно загрузить следующей
+        let isLoading = false; // Флаг, чтобы не загружать несколько раз одновременно
+
+        // === 2. Находим элементы на странице ===
+        const container = document.getElementById('content-container');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        const scrollObserverElement = document.getElementById('scroll-observer');
+
+        // === 3. Функция подгрузки нового контента ===
+        function loadMoreContent() {
+            // Если сейчас уже идет загрузка или текст закончился - ничего не делаем
+            if (isLoading || currentIndex >= textData.length) {
+                return;
+            }
+
+            isLoading = true;
+            loadingIndicator.style.opacity = '1'; // Показываем надпись "Загрузка..."
+
+            // Имитируем задержку сети (как будто скачиваем с сервера 1 секунду)
+            setTimeout(() => {
+                // Создаем новый блок <div> для текста
+                const newSection = document.createElement('div');
+                newSection.className = 'text-section';
+                
+                // Вставляем HTML код из нашего массива
+                newSection.innerHTML = textData[currentIndex];
+                
+                // Добавляем этот блок в конец контейнера
+                container.appendChild(newSection);
+
+                currentIndex++; // Увеличиваем счетчик
+                isLoading = false;
+                loadingIndicator.style.opacity = '0'; // Прячем надпись "Загрузка..."
+
+                // Если мы загрузили последнюю часть, убираем сенсор и пишем "Конец"
+                if (currentIndex >= textData.length) {
+                    loadingIndicator.innerText = "Конец текста.";
+                    loadingIndicator.style.opacity = '1';
+                    observer.unobserve(scrollObserverElement); // Выключаем слежку
+                }
+            }, 1000); // Задержка 1000 миллисекунд (1 сек)
+        }
+
+        // === 4. Настраиваем "Слежку" (Intersection Observer) ===
+        const observerOptions = {
+            root: null, // Следим относительно окна браузера
+            rootMargin: '0px', 
+            threshold: 0.1 // Сработает, когда 10% сенсора появится на экране
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                // Если сенсор пересек нижнюю границу экрана
+                if (entry.isIntersecting) {
+                    loadMoreContent(); // Вызываем функцию загрузки
+                }
+            });
+        }, observerOptions);
+
+        // Даем команду наблюдателю следить за нашим сенсором
+        observer.observe(scrollObserverElement);
+    </script>
+
+</body>
+</html>
