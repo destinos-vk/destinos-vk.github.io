@@ -1,0 +1,67 @@
+<style>
+        /* Базовые настройки страницы */
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333333;
+            background-color: #f4f7f6; /* Мягкий светло-серый фон для всей страницы */
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Контейнер для центрирования и пропорциональных полей */
+        .container {
+            max-width: 800px; /* Максимальная ширина текста для удобного чтения */
+            margin: 40px auto; /* Автоматические поля слева и справа, отступ 40px сверху и снизу */
+            background-color: #ffffff; /* Белый фон для самого текста */
+            padding: 40px 50px;
+            border-radius: 8px; /* Скругленные углы */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Легкая тень для объема */
+        }
+
+        /* Стилизация заголовков */
+        h2 {
+            color: #2c3e50;
+            font-size: 1.5em;
+            border-bottom: 2px solid #3498db; /* Синяя линия под главным заголовком */
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+
+        h3 {
+            color: #2980b9;
+            font-size: 1.2em;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        /* Текст и выделения */
+        p {
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+
+        strong {
+            color: #2c3e50;
+        }
+
+        em {
+            color: #555555;
+        }
+
+        /* Адаптация под мобильные устройства (экраны меньше 768px) */
+        @media (max-width: 768px) {
+            .container {
+                margin: 0; /* Убираем внешние отступы */
+                padding: 20px 15px; /* Уменьшаем внутренние поля для экономии места */
+                border-radius: 0; /* Убираем скругления на мобильных */
+                box-shadow: none; /* Убираем тень */
+            }
+            body {
+                background-color: #ffffff; /* На мобильном весь фон делаем белым */
+            }
+            h2 {
+                font-size: 1.3em;
+            }
+        }
+    </style>
