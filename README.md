@@ -1,1 +1,2 @@
-# destinos
+Preserving Destinos
+With Annenberg Learner’s decision to sunset its streaming service on July 1, 2026, Destinos lost its long-term digital home. The destinos.github.io archive was created to fill that void, ensuring that this extraordinary masterwork remains accessible to educators, students, and life-long learners. The platform is independent, non-profit, and dedicated to maintaining the availability of this full-immersion masterpiece.
