@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Destinos: An Introduction to Spanish</title>
+    <style>
+        /* Сброс базовых отступов */
+        body, h1, h2, p {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f7f6;
+            padding: 20px;
+        }
+
+        /* Контейнер для имитации структуры сайта */
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: flex-start; /* Выравнивание по левому краю */
+        }
+
+        /* Основная левая колонка */
+        .content-left {
+            width: 100%;
+            max-width: 800px; /* Занимает только левую часть пространства */
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+
+        /* Адаптивные изображения */
+        .hero-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            object-fit: cover;
+        }
+
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        /* Стили для раскрывающихся абзацев */
+        details {
+            background-color: #fdfdfd;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        summary {
+            padding: 15px 20px;
+            font-size: 1.15rem;
+            font-weight: 600;
+            cursor: pointer;
+            background-color: #f8f9fa;
+            transition: background-color 0.2s ease;
+            list-style: none; /* Убирает стандартный маркер в Safari/Chrome */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        /* Кастомный плюс/минус для раскрывающихся списков */
+        summary::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: #666;
+            font-weight: 400;
+        }
+
+        details[open] summary::after {
+            content: '−';
+        }
+
+        details[open] summary {
+            background-color: #e9ecef;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .details-content {
+            padding: 20px;
+            background-color: #ffffff;
+            font-size: 1.05rem;
+        }
+        
+        .details-content ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .details-content li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-container">
+        <!-- Выделенная левая часть страницы -->
+        <main class="content-left">
+            <h1>Destinos: An Introduction to Spanish</h1>
+            
+            <!-- Место для основной фотографии -->
+            <img src="https://images.unsplash.com/photo-1543783207-ec64e4d95325?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Испанская архитектура" class="hero-image">
+            
+            <p>Этот вводный курс поможет вам освоить базу для общения на испанском языке. Вся необходимая информация для уроков структурирована ниже.</p>
+
+            <!-- Раскрывающийся абзац 1 -->
+            <details open>
+                <summary>Грамматика: Конструкция "Tener que + infinitivo"</summary>
+                <div class="details-content">
+                    <p>Эта конструкция используется для выражения долженствования или необходимости.</p>
+                    <ul>
+                        <li><strong>Tengo que estudiar español.</strong> — Я должен учить испанский.</li>
+                        <li><strong>Tienes que leer la carta.</strong> — Ты должен прочитать письмо.</li>
+                    </ul>
+                </div>
+            </details>
+
+            <!-- Раскрывающийся абзац 2 -->
+            <details>
+                <summary>Определенные и неопределенные артикли</summary>
+                <div class="details-content">
+                    <p>Артикли помогают определить род и число существительных в испанском языке. Здесь будут размещены правила их использования и таблицы склонений.</p>
+                </div>
+            </details>
+
+            <!-- Раскрывающийся абзац 3 -->
+            <details>
+                <summary>Episode 1: La Carta (Письмо)</summary>
+                <div class="details-content">
+                    <p><em>(Вставьте сюда оригинальный текст с описанием эпизода)</em></p>
+                    <p>История начинается в Мексике, где дон Фернандо рассказывает своей семье о таинственном письме из Испании...</p>
+                </div>
+            </details>
+
+        </main>
+    </div>
+
+</body>
+</html>
