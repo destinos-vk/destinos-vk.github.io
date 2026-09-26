@@ -229,3 +229,292 @@
   }
 
 }
+
+/* =========================================================
+   CIRA CLUB — ISSUE ROAD MAP v1.0
+   ========================================================= */
+
+.cira-roadmap {
+  width: 100%;
+  margin: 0;
+  padding: 22px 0 18px;
+
+  background: var(--cira-surface, #ffffff);
+  border-bottom: 1px solid var(--cira-border, #dce4ea);
+}
+
+
+/* SCROLL AREA */
+
+.cira-roadmap__scroll {
+  width: 100%;
+  max-width: var(--cira-content-max, 1180px);
+
+  margin: 0 auto;
+  padding: 0 32px 10px;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  scroll-behavior: smooth;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+
+  scrollbar-width: thin;
+  scrollbar-color:
+    var(--cira-border-strong, #c8d2db)
+    transparent;
+}
+
+.cira-roadmap__scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.cira-roadmap__scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.cira-roadmap__scroll::-webkit-scrollbar-thumb {
+  background: var(--cira-border-strong, #c8d2db);
+  border-radius: 999px;
+}
+
+.cira-roadmap__scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--cira-text-muted, #6f7c89);
+}
+
+
+/* TRACK */
+
+.cira-roadmap__track {
+  display: flex;
+  align-items: flex-start;
+
+  width: max-content;
+  min-width: 100%;
+
+  gap: 22px;
+}
+
+
+/* SINGLE STOP */
+
+.cira-stop {
+  position: relative;
+
+  width: 78px;
+  min-width: 78px;
+
+  padding: 0;
+  border: 0;
+  background: transparent;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+  color: var(--cira-text-muted, #6f7c89);
+
+  cursor: pointer;
+}
+
+
+/* CONNECTING LINE */
+
+.cira-stop:not(:last-child)::after {
+  content: "";
+
+  position: absolute;
+
+  top: 28px;
+  left: calc(50% + 31px);
+
+  width: 38px;
+  height: 2px;
+
+  background: var(--cira-border, #dce4ea);
+
+  pointer-events: none;
+}
+
+
+/* CIRCLE */
+
+.cira-stop__circle {
+  width: 58px;
+  height: 58px;
+
+  display: grid;
+  place-items: center;
+
+  flex: 0 0 58px;
+
+  border: 2px solid var(--cira-border-strong, #c8d2db);
+  border-radius: 50%;
+
+  background: var(--cira-surface, #ffffff);
+
+  color: var(--cira-primary, #38475a);
+
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+
+/* LABEL */
+
+.cira-stop__label {
+  width: 100%;
+
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.25;
+
+  text-align: center;
+
+  white-space: nowrap;
+
+  color: currentColor;
+}
+
+
+/* HOVER */
+
+.cira-stop:hover .cira-stop__circle {
+  border-color: var(--cira-primary, #38475a);
+  background: var(--cira-surface-soft, #f8fafc);
+
+  transform: translateY(-1px);
+}
+
+.cira-stop:hover {
+  color: var(--cira-primary, #38475a);
+}
+
+
+/* ACTIVE */
+
+.cira-stop.is-active {
+  color: var(--cira-primary, #38475a);
+}
+
+.cira-stop.is-active .cira-stop__circle {
+  background: var(--cira-primary, #38475a);
+  border-color: var(--cira-primary, #38475a);
+
+  color: #ffffff;
+}
+
+.cira-stop.is-active .cira-stop__label {
+  font-weight: 700;
+}
+
+
+/* KEYBOARD FOCUS */
+
+.cira-stop:focus-visible {
+  outline: none;
+}
+
+.cira-stop:focus-visible .cira-stop__circle {
+  outline: 3px solid var(--cira-focus, #5e83a6);
+  outline-offset: 4px;
+}
+
+
+/* DISABLED — reserved for future use */
+
+.cira-stop:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.cira-stop:disabled .cira-stop__circle {
+  transform: none;
+}
+
+
+/* TABLET */
+
+@media (max-width: 1023px) {
+
+  .cira-roadmap__scroll {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .cira-roadmap__track {
+    gap: 18px;
+  }
+
+  .cira-stop {
+    width: 74px;
+    min-width: 74px;
+  }
+
+}
+
+
+/* MOBILE */
+
+@media (max-width: 767px) {
+
+  .cira-roadmap {
+    padding-top: 18px;
+    padding-bottom: 14px;
+  }
+
+  .cira-roadmap__scroll {
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 9px;
+  }
+
+  .cira-roadmap__track {
+    gap: 14px;
+  }
+
+  .cira-stop {
+    width: 70px;
+    min-width: 70px;
+
+    gap: 8px;
+  }
+
+  .cira-stop__circle {
+    width: 48px;
+    height: 48px;
+    flex-basis: 48px;
+
+    font-size: 15px;
+  }
+
+  .cira-stop__label {
+    font-size: 14px;
+  }
+
+  .cira-stop:not(:last-child)::after {
+    top: 23px;
+    left: calc(50% + 26px);
+
+    width: 28px;
+  }
+
+}
