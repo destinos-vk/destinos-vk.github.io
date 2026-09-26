@@ -506,6 +506,188 @@
     font-size: 15px;
   }
 
+   /* =========================================================
+   CIRA CLUB — ISSUE SHELL / STOP 1
+   ========================================================= */
+
+.cira-issue {
+  width: 100%;
+  max-width: var(--cira-content-max, 1180px);
+
+  margin: 0 auto;
+  padding: 40px 32px 0;
+}
+
+
+/* ISSUE IDENTITY */
+
+.cira-issue__identity {
+  max-width: 900px;
+  margin-bottom: 36px;
+}
+
+.cira-issue__meta {
+  margin-bottom: 10px;
+
+  color: var(--cira-text-muted, #6f7c89);
+
+  font-size: 14px;
+  font-weight: 650;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.cira-issue__title {
+  margin: 0;
+
+  color: var(--cira-text, #263442);
+
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.22;
+  letter-spacing: -0.025em;
+}
+
+
+/* CURRENT STOP HEADER */
+
+.cira-stop-header {
+  max-width: 860px;
+  margin-bottom: 24px;
+}
+
+.cira-stop-header__eyebrow {
+  margin-bottom: 8px;
+
+  color: var(--cira-text-muted, #6f7c89);
+
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.055em;
+}
+
+.cira-stop-header__title {
+  margin: 0 0 10px;
+
+  color: var(--cira-primary, #38475a);
+
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.cira-stop-header__instruction {
+  max-width: 760px;
+  margin: 0;
+
+  color: var(--cira-text, #263442);
+
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+
+/* WORKING AREA */
+
+.cira-working-area {
+  width: 100%;
+
+  padding: 32px;
+
+  background: var(--cira-surface, #ffffff);
+
+  border: 1px solid var(--cira-border, #dce4ea);
+  border-radius: 16px;
+
+  box-shadow: 0 4px 18px rgba(38, 52, 66, 0.06);
+}
+
+
+/* AUDIO CARD */
+
+.cira-audio-card {
+  max-width: 760px;
+}
+
+.cira-audio-card__label {
+  margin-bottom: 8px;
+
+  color: var(--cira-text-muted, #6f7c89);
+
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.cira-audio-card__title {
+  margin: 0 0 6px;
+
+  color: var(--cira-text, #263442);
+
+  font-size: 19px;
+  font-weight: 650;
+}
+
+.cira-audio-card__hint {
+  margin: 0 0 18px;
+
+  color: var(--cira-text-muted, #6f7c89);
+
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.cira-audio {
+  display: block;
+
+  width: 100%;
+  max-width: 720px;
+}
+
+
+/* TABLET */
+
+@media (max-width: 1023px) {
+
+  .cira-issue {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+}
+
+
+/* MOBILE */
+
+@media (max-width: 767px) {
+
+  .cira-issue {
+    padding: 28px 16px 0;
+  }
+
+  .cira-issue__identity {
+    margin-bottom: 30px;
+  }
+
+  .cira-issue__title {
+    font-size: 26px;
+    line-height: 1.25;
+  }
+
+  .cira-stop-header__title {
+    font-size: 21px;
+  }
+
+  .cira-stop-header__instruction {
+    font-size: 16px;
+  }
+
+  .cira-working-area {
+    padding: 20px 18px;
+  }
+
+}
+
   .cira-stop__label {
     font-size: 14px;
   }
