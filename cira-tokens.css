@@ -1,0 +1,18 @@
+:root {
+  --cira-bg: #f0f4f7;
+  --cira-surface: #ffffff;
+  --cira-surface-soft: #f8fafc;
+
+  --cira-primary: #38475a;
+  --cira-primary-hover: #2f3c4d;
+
+  --cira-text: #263442;
+  --cira-text-muted: #6f7c89;
+
+  --cira-border: #dce4ea;
+  --cira-border-strong: #c8d2db;
+
+  --cira-focus: #5e83a6;
+
+  --cira-content-max: 1180px;
+}
