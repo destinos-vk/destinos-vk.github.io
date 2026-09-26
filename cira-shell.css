@@ -1,19 +1,32 @@
 /* =========================================================
    CIRA CLUB — cira-shell.css
-   Version: 1.1
+   Version: 1.5
    Date: 2026-09-26
 
-   PURPOSE
-   Global reusable shell and Issue components for CIRA CLUB.
-
-   Depends on:
-   https://destinos-vk.github.io/cira-tokens.css
+   Fixes:
+   - 3-item Issue Road Map: Listen / Language / Speaking Engine
+   - no orphan labels or overlapping roadmap items
+   - MAIN STORY + Audio | Script locked to one top row
+   - larger MAIN STORY heading
+   - extra spacing before and after persistent audio player
+   - Speaking Engine -> Speaking on mobile
    ========================================================= */
 
-
-/* =========================================================
-   0. GLOBAL BASE
-   ========================================================= */
+:root {
+  --cira-bg: #f0f4f7;
+  --cira-surface: #ffffff;
+  --cira-surface-soft: #f8fafc;
+  --cira-primary: #38475a;
+  --cira-primary-hover: #2f3c4d;
+  --cira-text: #263442;
+  --cira-text-muted: #6f7c89;
+  --cira-border: #dce4ea;
+  --cira-border-strong: #c8d2db;
+  --cira-focus: #5e83a6;
+  --cira-radius-card: 16px;
+  --cira-radius-control: 10px;
+  --cira-content-max: 1180px;
+}
 
 *,
 *::before,
@@ -28,19 +41,9 @@ html {
 
 body {
   margin: 0;
-
-  background: var(--cira-bg, #f0f4f7);
-  color: var(--cira-text, #263442);
-
-  font-family:
-    Inter,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Arial,
-    sans-serif;
-
+  background: var(--cira-bg);
+  color: var(--cira-text);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
   font-size: 17px;
   line-height: 1.6;
 }
@@ -60,50 +63,43 @@ a {
   color: inherit;
 }
 
+audio,
 img,
-svg,
-audio {
+svg {
   max-width: 100%;
 }
 
+[hidden] {
+  display: none !important;
+}
 
 /* =========================================================
-   1. HEADER
+   HEADER
    ========================================================= */
 
 .cira-header {
   width: 100%;
-  height: 76px;
-
-  background: var(--cira-surface, #ffffff);
-  border-bottom: 1px solid var(--cira-border, #dce4ea);
-
+  min-height: 76px;
   display: flex;
   align-items: center;
+  background: var(--cira-surface);
+  border-bottom: 1px solid var(--cira-border);
 }
 
 .cira-header__inner {
   width: 100%;
-  max-width: var(--cira-content-max, 1180px);
-
+  max-width: var(--cira-content-max);
   margin: 0 auto;
   padding: 0 32px;
-
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
-
-
-/* BRAND */
 
 .cira-brand {
   display: inline-flex;
   align-items: center;
   gap: 14px;
-
-  color: var(--cira-primary, #38475a);
-
+  color: var(--cira-primary);
   text-decoration: none;
   white-space: nowrap;
 }
@@ -112,219 +108,120 @@ audio {
   font-size: 24px;
   font-weight: 750;
   line-height: 1;
-
   letter-spacing: -0.02em;
 }
 
 .cira-brand__section {
   padding-left: 14px;
-
-  border-left: 1px solid var(--cira-border-strong, #c8d2db);
-
-  color: var(--cira-text-muted, #6f7c89);
-
+  border-left: 1px solid var(--cira-border-strong);
+  color: var(--cira-text-muted);
   font-size: 14px;
   font-weight: 600;
   line-height: 1;
-
   letter-spacing: 0.04em;
 }
 
 .cira-brand:hover .cira-brand__name {
-  color: var(--cira-primary-hover, #2f3c4d);
+  color: var(--cira-primary-hover);
 }
 
 .cira-brand:focus-visible {
-  outline: 3px solid var(--cira-focus, #5e83a6);
+  outline: 3px solid var(--cira-focus);
   outline-offset: 6px;
-
   border-radius: 4px;
 }
 
-
 /* =========================================================
-   2. ISSUE ROAD MAP
+   ISSUE ROAD MAP — 3 MAJOR STOPS
    ========================================================= */
 
 .cira-roadmap {
   width: 100%;
-
-  margin: 0;
   padding: 22px 0 18px;
-
-  background: var(--cira-surface, #ffffff);
-  border-bottom: 1px solid var(--cira-border, #dce4ea);
+  background: var(--cira-surface);
+  border-bottom: 1px solid var(--cira-border);
 }
 
-
-/* SCROLL AREA */
-
-.cira-roadmap__scroll {
+.cira-roadmap__inner {
   width: 100%;
-  max-width: var(--cira-content-max, 1180px);
-
+  max-width: 760px;
   margin: 0 auto;
-  padding: 0 32px 10px;
-
-  overflow-x: auto;
-  overflow-y: hidden;
-
-  scroll-behavior: smooth;
-  overscroll-behavior-inline: contain;
-  -webkit-overflow-scrolling: touch;
-
-  scrollbar-width: thin;
-  scrollbar-color:
-    var(--cira-border-strong, #c8d2db)
-    transparent;
+  padding: 0 32px;
 }
-
-.cira-roadmap__scroll::-webkit-scrollbar {
-  height: 6px;
-}
-
-.cira-roadmap__scroll::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.cira-roadmap__scroll::-webkit-scrollbar-thumb {
-  background: var(--cira-border-strong, #c8d2db);
-  border-radius: 999px;
-}
-
-.cira-roadmap__scroll::-webkit-scrollbar-thumb:hover {
-  background: var(--cira-text-muted, #6f7c89);
-}
-
-
-/* TRACK */
 
 .cira-roadmap__track {
-  display: flex;
-  align-items: flex-start;
-
-  width: max-content;
-  min-width: 100%;
-
-  gap: 22px;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  width: 100%;
 }
 
-
-/* SINGLE STOP */
+/* One continuous neutral line BEHIND the circles. */
+.cira-roadmap__track::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: 28px;
+  left: 16.666%;
+  right: 16.666%;
+  height: 2px;
+  background: var(--cira-border);
+}
 
 .cira-stop {
   position: relative;
-
-  width: 78px;
-  min-width: 78px;
-
-  margin: 0;
-  padding: 0;
-
-  border: 0;
-  background: transparent;
-
+  z-index: 1;
+  min-width: 0;
+  padding: 0 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 9px;
-
-  color: var(--cira-text-muted, #6f7c89);
-
-  cursor: pointer;
+  color: var(--cira-text-muted);
+  text-align: center;
 }
-
-
-/* CONNECTING LINE */
-
-.cira-stop:not(:last-child)::after {
-  content: "";
-
-  position: absolute;
-
-  top: 28px;
-  left: calc(50% + 31px);
-
-  width: 38px;
-  height: 2px;
-
-  background: var(--cira-border, #dce4ea);
-
-  pointer-events: none;
-}
-
-
-/* STOP CIRCLE */
 
 .cira-stop__circle {
   position: relative;
-  z-index: 1;
-
+  z-index: 2;
   width: 58px;
   height: 58px;
   flex: 0 0 58px;
-
   display: grid;
   place-items: center;
-
-  border: 2px solid var(--cira-border-strong, #c8d2db);
+  border: 2px solid var(--cira-border-strong);
   border-radius: 50%;
-
-  background: var(--cira-surface, #ffffff);
-  color: var(--cira-primary, #38475a);
-
+  background: var(--cira-surface);
+  color: var(--cira-primary);
   font-size: 16px;
   font-weight: 700;
   line-height: 1;
-
-  transition:
-    background-color 160ms ease,
-    border-color 160ms ease,
-    color 160ms ease,
-    transform 160ms ease;
 }
 
-
-/* STOP LABEL */
-
 .cira-stop__label {
+  display: block;
   width: 100%;
-
+  min-width: 0;
   color: currentColor;
-
   font-size: 14px;
   font-weight: 600;
   line-height: 1.25;
-
   text-align: center;
   white-space: nowrap;
 }
 
-
-/* HOVER */
-
-.cira-stop:hover {
-  color: var(--cira-primary, #38475a);
+.cira-stop__label-mobile {
+  display: none;
 }
-
-.cira-stop:hover .cira-stop__circle {
-  border-color: var(--cira-primary, #38475a);
-  background: var(--cira-surface-soft, #f8fafc);
-
-  transform: translateY(-1px);
-}
-
-
-/* ACTIVE */
 
 .cira-stop.is-active {
-  color: var(--cira-primary, #38475a);
+  color: var(--cira-primary);
 }
 
 .cira-stop.is-active .cira-stop__circle {
-  background: var(--cira-primary, #38475a);
-  border-color: var(--cira-primary, #38475a);
-
+  border-color: var(--cira-primary);
+  background: var(--cira-primary);
   color: #ffffff;
 }
 
@@ -332,114 +229,62 @@ audio {
   font-weight: 700;
 }
 
-
-/* COMPLETED — reserved */
-
-.cira-stop.is-completed .cira-stop__circle {
-  border-color: var(--cira-primary, #38475a);
-}
-
-
-/* FOCUS */
-
-.cira-stop:focus-visible {
-  outline: none;
-}
-
-.cira-stop:focus-visible .cira-stop__circle {
-  outline: 3px solid var(--cira-focus, #5e83a6);
-  outline-offset: 4px;
-}
-
-
-/* DISABLED */
-
-.cira-stop:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
-}
-
-.cira-stop:disabled .cira-stop__circle {
-  transform: none;
-}
-
-
 /* =========================================================
-   3. ISSUE MAIN CONTAINER
+   ISSUE
    ========================================================= */
 
 .cira-issue {
   width: 100%;
-  max-width: var(--cira-content-max, 1180px);
-
+  max-width: var(--cira-content-max);
   margin: 0 auto;
   padding: 40px 32px 0;
 }
 
-
-/* =========================================================
-   4. ISSUE IDENTITY
-   ========================================================= */
-
 .cira-issue__identity {
   max-width: 920px;
-
-  margin: 0 0 36px;
+  margin: 0 0 34px;
 }
 
 .cira-issue__meta {
   margin: 0 0 10px;
-
-  color: var(--cira-text-muted, #6f7c89);
-
+  color: var(--cira-text-muted);
   font-size: 14px;
   font-weight: 650;
   line-height: 1.4;
-
   letter-spacing: 0.055em;
   text-transform: uppercase;
 }
 
 .cira-issue__title {
   margin: 0;
-
-  color: var(--cira-text, #263442);
-
+  color: var(--cira-text);
   font-size: 32px;
   font-weight: 700;
   line-height: 1.22;
-
   letter-spacing: -0.025em;
 }
 
-
 /* =========================================================
-   5. CURRENT STOP HEADER
+   STOP HEADER
    ========================================================= */
 
 .cira-stop-header {
   max-width: 860px;
-
   margin: 0 0 24px;
 }
 
 .cira-stop-header__eyebrow {
   margin: 0 0 8px;
-
-  color: var(--cira-text-muted, #6f7c89);
-
+  color: var(--cira-text-muted);
   font-size: 14px;
   font-weight: 700;
   line-height: 1.4;
-
   letter-spacing: 0.055em;
 }
 
 .cira-stop-header__title {
   margin: 0 0 10px;
-
-  color: var(--cira-primary, #38475a);
-
+  color: var(--cira-primary);
   font-size: 24px;
   font-weight: 700;
   line-height: 1.25;
@@ -447,302 +292,283 @@ audio {
 
 .cira-stop-header__instruction {
   max-width: 760px;
-
   margin: 0;
-
-  color: var(--cira-text, #263442);
-
+  color: var(--cira-text);
   font-size: 17px;
   line-height: 1.6;
 }
 
-
 /* =========================================================
-   6. DYNAMIC WORKING AREA
+   WORKING AREA
    ========================================================= */
 
 .cira-working-area {
   width: 100%;
-
   padding: 32px;
-
-  background: var(--cira-surface, #ffffff);
-
-  border: 1px solid var(--cira-border, #dce4ea);
-  border-radius: var(--cira-radius-card, 16px);
-
+  background: var(--cira-surface);
+  border: 1px solid var(--cira-border);
+  border-radius: var(--cira-radius-card);
   box-shadow: 0 4px 18px rgba(38, 52, 66, 0.06);
 }
 
-
 /* =========================================================
-   7. AUDIO CARD
+   MAIN STORY TOP BAR
    ========================================================= */
 
-.cira-audio-card {
+.cira-story-topbar {
   width: 100%;
-  max-width: 760px;
+  margin: 0 0 28px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 24px;
 }
 
-.cira-audio-card__label {
-  margin: 0 0 8px;
-
-  color: var(--cira-text-muted, #6f7c89);
-
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.4;
-
-  letter-spacing: 0.06em;
+.cira-story-title {
+  margin: 0;
+  color: var(--cira-primary);
+  font-size: 28px;
+  font-weight: 760;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
 }
 
-.cira-audio-card__title {
-  margin: 0 0 6px;
+/* =========================================================
+   AUDIO | SCRIPT SELECTOR
+   ========================================================= */
 
-  color: var(--cira-text, #263442);
+.cira-view-selector {
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  padding: 4px;
+  background: var(--cira-surface-soft);
+  border: 1px solid var(--cira-border);
+  border-radius: 12px;
+  white-space: nowrap;
+}
 
-  font-size: 19px;
+.cira-view-selector__button {
+  min-width: 104px;
+  min-height: 40px;
+  margin: 0;
+  padding: 8px 18px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--cira-text-muted);
+  font-size: 15px;
+  font-weight: 650;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.cira-view-selector__button:hover {
+  color: var(--cira-primary);
+}
+
+.cira-view-selector__button.is-active {
+  background: var(--cira-primary);
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(38, 52, 66, 0.12);
+}
+
+.cira-view-selector__button:focus-visible {
+  outline: 3px solid var(--cira-focus);
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   PERSISTENT AUDIO PLAYER
+   ========================================================= */
+
+.cira-player-block {
+  width: 100%;
+  max-width: 820px;
+  margin: 0;
+}
+
+.cira-player-label {
+  margin: 0 0 20px;
+  color: var(--cira-text);
+  font-size: 20px;
   font-weight: 650;
   line-height: 1.35;
 }
 
-.cira-audio-card__hint {
-  margin: 0 0 18px;
-
-  color: var(--cira-text-muted, #6f7c89);
-
-  font-size: 15px;
-  line-height: 1.5;
-}
-
 .cira-audio {
   display: block;
-
   width: 100%;
-  max-width: 720px;
-
-  margin: 0;
+  max-width: 760px;
+  margin: 0 0 30px;
 }
 
-
 /* =========================================================
-   8. ISSUE NAVIGATION
+   VIEW PANELS
    ========================================================= */
 
-.cira-issue-navigation {
+.cira-view-panel {
   width: 100%;
-
-  margin: 28px 0 0;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  gap: 16px;
+  max-width: 840px;
 }
 
+.cira-audio-mode {
+  max-width: 760px;
+}
+
+.cira-audio-mode__hint {
+  margin: 0;
+  color: var(--cira-text-muted);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+/* Explicit vertical breathing room before script. */
+.cira-script {
+  max-width: 840px;
+  padding-top: 4px;
+}
+
+.cira-script__text {
+  max-width: 800px;
+  color: var(--cira-text);
+  font-size: 18px;
+  line-height: 1.68;
+}
+
+.cira-script__text p {
+  margin: 0 0 19px;
+}
+
+.cira-script__text p:last-child {
+  margin-bottom: 0;
+}
+
+.cira-script__question {
+  margin-top: 26px !important;
+  padding: 20px 22px;
+  background: var(--cira-surface-soft);
+  border-left: 4px solid var(--cira-primary);
+  border-radius: 0 10px 10px 0;
+  color: var(--cira-primary);
+  font-weight: 650;
+}
+
+.cira-script__footer {
+  margin-top: 30px;
+  padding-top: 24px;
+  border-top: 1px solid var(--cira-border);
+}
 
 /* =========================================================
-   9. BUTTONS
+   BUTTONS
    ========================================================= */
 
 .cira-button {
   min-height: 44px;
-
   padding: 10px 18px;
-
-  border-radius: var(--cira-radius-control, 10px);
-
+  border-radius: var(--cira-radius-control);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-
+  gap: 9px;
   font-size: 15px;
   font-weight: 600;
   line-height: 1.2;
-
   text-decoration: none;
-
   cursor: pointer;
-
-  transition:
-    background-color 160ms ease,
-    border-color 160ms ease,
-    color 160ms ease,
-    transform 160ms ease;
 }
-
-
-/* PRIMARY BUTTON */
-
-.cira-button--primary {
-  border: 1px solid var(--cira-primary, #38475a);
-
-  background: var(--cira-primary, #38475a);
-  color: #ffffff;
-}
-
-.cira-button--primary:hover {
-  border-color: var(--cira-primary-hover, #2f3c4d);
-  background: var(--cira-primary-hover, #2f3c4d);
-
-  transform: translateY(-1px);
-}
-
-
-/* SECONDARY BUTTON */
 
 .cira-button--secondary {
-  border: 1px solid var(--cira-border-strong, #c8d2db);
-
-  background: var(--cira-surface, #ffffff);
-  color: var(--cira-primary, #38475a);
+  border: 1px solid var(--cira-border-strong);
+  background: var(--cira-surface);
+  color: var(--cira-primary);
 }
 
 .cira-button--secondary:hover {
-  border-color: var(--cira-primary, #38475a);
-
-  background: var(--cira-surface-soft, #f8fafc);
+  border-color: var(--cira-primary);
+  background: var(--cira-surface-soft);
 }
 
-
-/* BUTTON FOCUS */
-
 .cira-button:focus-visible {
-  outline: 3px solid var(--cira-focus, #5e83a6);
+  outline: 3px solid var(--cira-focus);
   outline-offset: 3px;
 }
 
-
-/* BUTTON DISABLED */
-
-.cira-button:disabled,
-.cira-button[aria-disabled="true"] {
-  opacity: 0.55;
-
-  cursor: not-allowed;
-  transform: none;
+.cira-download-icon {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
-
 
 /* =========================================================
-   10. GENERIC CONTENT CARD
-   ========================================================= */
-
-.cira-card {
-  padding: 24px 32px;
-
-  background: var(--cira-surface, #ffffff);
-
-  border: 1px solid var(--cira-border, #dce4ea);
-  border-radius: var(--cira-radius-card, 16px);
-
-  box-shadow: 0 4px 18px rgba(38, 52, 66, 0.06);
-}
-
-.cira-card--soft {
-  background: var(--cira-surface-soft, #f8fafc);
-
-  box-shadow: none;
-}
-
-
-/* =========================================================
-   11. LEARNING TEXT
-   ========================================================= */
-
-.cira-learning-text {
-  max-width: 820px;
-
-  color: var(--cira-text, #263442);
-
-  font-size: 18px;
-  line-height: 1.65;
-}
-
-.cira-learning-text p {
-  margin: 0 0 18px;
-}
-
-.cira-learning-text p:last-child {
-  margin-bottom: 0;
-}
-
-
-/* =========================================================
-   12. FOOTER
+   FOOTER
    ========================================================= */
 
 .cira-footer {
   width: 100%;
-
   margin-top: 64px;
-
-  background: var(--cira-primary, #38475a);
+  background: var(--cira-primary);
   color: #ffffff;
 }
 
 .cira-footer__inner {
   width: 100%;
-  max-width: var(--cira-content-max, 1180px);
-
+  max-width: var(--cira-content-max);
   margin: 0 auto;
   padding: 30px 32px;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   gap: 32px;
 }
 
 .cira-footer__brand {
   display: flex;
   flex-direction: column;
-
   gap: 6px;
 }
 
 .cira-footer__name {
-  color: #ffffff;
-
   font-size: 18px;
   font-weight: 700;
   line-height: 1.2;
-
-  letter-spacing: -0.01em;
 }
 
 .cira-footer__tagline {
   color: rgba(255, 255, 255, 0.72);
-
   font-size: 14px;
   line-height: 1.45;
 }
 
 .cira-footer__meta {
   flex-shrink: 0;
-
   color: rgba(255, 255, 255, 0.68);
-
   font-size: 13px;
   font-weight: 500;
-  line-height: 1.4;
 }
 
-
 /* =========================================================
-   13. TABLET
+   TABLET
    ========================================================= */
 
 @media (max-width: 1023px) {
-
   .cira-header {
-    height: 68px;
+    min-height: 68px;
   }
 
-  .cira-header__inner {
+  .cira-header__inner,
+  .cira-roadmap__inner,
+  .cira-issue,
+  .cira-footer__inner {
     padding-left: 24px;
     padding-right: 24px;
   }
@@ -751,58 +577,32 @@ audio {
     font-size: 22px;
   }
 
-
-  .cira-roadmap__scroll {
-    padding-left: 24px;
-    padding-right: 24px;
+  .cira-story-title {
+    font-size: 25px;
   }
-
-  .cira-roadmap__track {
-    gap: 18px;
-  }
-
-  .cira-stop {
-    width: 74px;
-    min-width: 74px;
-  }
-
-
-  .cira-issue {
-    padding-left: 24px;
-    padding-right: 24px;
-  }
-
 
   .cira-footer {
     margin-top: 48px;
   }
-
-  .cira-footer__inner {
-    padding-left: 24px;
-    padding-right: 24px;
-  }
-
 }
 
-
 /* =========================================================
-   14. MOBILE
+   MOBILE
    ========================================================= */
 
 @media (max-width: 767px) {
-
   body {
     font-size: 16px;
   }
 
-
-  /* HEADER */
-
   .cira-header {
-    height: 64px;
+    min-height: 64px;
   }
 
-  .cira-header__inner {
+  .cira-header__inner,
+  .cira-roadmap__inner,
+  .cira-issue,
+  .cira-footer__inner {
     padding-left: 16px;
     padding-right: 16px;
   }
@@ -817,69 +617,51 @@ audio {
 
   .cira-brand__section {
     padding-left: 10px;
-
     font-size: 12px;
-    letter-spacing: 0.035em;
   }
-
-
-  /* ROAD MAP */
 
   .cira-roadmap {
     padding-top: 18px;
     padding-bottom: 14px;
   }
 
-  .cira-roadmap__scroll {
-    padding-left: 16px;
-    padding-right: 16px;
-    padding-bottom: 9px;
-  }
-
-  .cira-roadmap__track {
-    gap: 14px;
+  .cira-roadmap__track::before {
+    top: 23px;
   }
 
   .cira-stop {
-    width: 70px;
-    min-width: 70px;
-
-    gap: 8px;
+    padding-left: 3px;
+    padding-right: 3px;
   }
 
   .cira-stop__circle {
     width: 48px;
     height: 48px;
     flex-basis: 48px;
-
     font-size: 15px;
   }
 
   .cira-stop__label {
-    font-size: 14px;
+    font-size: 13px;
   }
 
-  .cira-stop:not(:last-child)::after {
-    top: 23px;
-    left: calc(50% + 26px);
-
-    width: 28px;
+  .cira-stop__label-desktop {
+    display: none;
   }
 
-
-  /* ISSUE */
+  .cira-stop__label-mobile {
+    display: inline;
+  }
 
   .cira-issue {
-    padding: 28px 16px 0;
+    padding-top: 28px;
   }
 
   .cira-issue__identity {
-    margin-bottom: 30px;
+    margin-bottom: 28px;
   }
 
   .cira-issue__meta {
-    margin-bottom: 8px;
-
     font-size: 13px;
   }
 
@@ -887,9 +669,6 @@ audio {
     font-size: 26px;
     line-height: 1.25;
   }
-
-
-  /* STOP HEADER */
 
   .cira-stop-header {
     margin-bottom: 20px;
@@ -905,92 +684,69 @@ audio {
 
   .cira-stop-header__instruction {
     font-size: 16px;
-    line-height: 1.6;
   }
-
-
-  /* WORKING AREA */
 
   .cira-working-area {
     padding: 20px 18px;
   }
 
+  .cira-story-topbar {
+    gap: 10px;
+    margin-bottom: 24px;
+  }
 
-  /* AUDIO */
+  .cira-story-title {
+    font-size: 20px;
+    white-space: nowrap;
+  }
 
-  .cira-audio-card__title {
+  .cira-view-selector {
+    padding: 3px;
+  }
+
+  .cira-view-selector__button {
+    min-width: 62px;
+    min-height: 38px;
+    padding: 7px 9px;
+    font-size: 13px;
+  }
+
+  .cira-player-label {
+    margin-bottom: 18px;
     font-size: 18px;
   }
 
-  .cira-audio-card__hint {
+  .cira-audio {
+    margin-bottom: 28px;
+  }
+
+  .cira-audio-mode__hint {
     font-size: 14px;
   }
 
-
-  /* NAVIGATION */
-
-  .cira-issue-navigation {
-    margin-top: 22px;
-
-    flex-wrap: wrap;
-  }
-
-  .cira-issue-navigation .cira-button {
-    min-height: 44px;
-  }
-
-
-  /* CARDS */
-
-  .cira-card {
-    padding: 20px 18px;
-  }
-
-
-  /* LEARNING TEXT */
-
-  .cira-learning-text {
+  .cira-script__text {
     font-size: 17px;
     line-height: 1.65;
   }
 
-
-  /* FOOTER */
+  .cira-script__question {
+    padding: 18px;
+  }
 
   .cira-footer {
     margin-top: 40px;
   }
 
   .cira-footer__inner {
-    padding: 26px 16px;
-
+    padding-top: 26px;
+    padding-bottom: 26px;
     flex-direction: column;
     align-items: flex-start;
-
     gap: 20px;
   }
-
-  .cira-footer__name {
-    font-size: 17px;
-  }
-
-  .cira-footer__tagline {
-    font-size: 14px;
-  }
-
-  .cira-footer__meta {
-    font-size: 13px;
-  }
-
 }
 
-
-/* =========================================================
-   15. VERY SMALL MOBILE
-   ========================================================= */
-
 @media (max-width: 380px) {
-
   .cira-brand__name {
     font-size: 19px;
   }
@@ -1004,19 +760,22 @@ audio {
   }
 
   .cira-working-area {
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-left: 14px;
+    padding-right: 14px;
   }
 
+  .cira-story-title {
+    font-size: 18px;
+  }
+
+  .cira-view-selector__button {
+    min-width: 56px;
+    padding-left: 7px;
+    padding-right: 7px;
+  }
 }
 
-
-/* =========================================================
-   16. REDUCED MOTION
-   ========================================================= */
-
 @media (prefers-reduced-motion: reduce) {
-
   html {
     scroll-behavior: auto;
   }
@@ -1027,7 +786,5 @@ audio {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
   }
-
 }
