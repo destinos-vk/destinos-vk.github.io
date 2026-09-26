@@ -1,5 +1,74 @@
 /* =========================================================
-   CIRA CLUB — HEADER v1.0
+   CIRA CLUB — cira-shell.css
+   Version: 1.1
+   Date: 2026-09-26
+
+   PURPOSE
+   Global reusable shell and Issue components for CIRA CLUB.
+
+   Depends on:
+   https://destinos-vk.github.io/cira-tokens.css
+   ========================================================= */
+
+
+/* =========================================================
+   0. GLOBAL BASE
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+
+  background: var(--cira-bg, #f0f4f7);
+  color: var(--cira-text, #263442);
+
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  color: inherit;
+}
+
+img,
+svg,
+audio {
+  max-width: 100%;
+}
+
+
+/* =========================================================
+   1. HEADER
    ========================================================= */
 
 .cira-header {
@@ -34,25 +103,17 @@
   gap: 14px;
 
   color: var(--cira-primary, #38475a);
-  text-decoration: none;
 
+  text-decoration: none;
   white-space: nowrap;
 }
 
 .cira-brand__name {
-  font-family:
-    Inter,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Arial,
-    sans-serif;
-
   font-size: 24px;
   font-weight: 750;
-  letter-spacing: -0.02em;
   line-height: 1;
+
+  letter-spacing: -0.02em;
 }
 
 .cira-brand__section {
@@ -60,15 +121,14 @@
 
   border-left: 1px solid var(--cira-border-strong, #c8d2db);
 
+  color: var(--cira-text-muted, #6f7c89);
+
   font-size: 14px;
   font-weight: 600;
+  line-height: 1;
+
   letter-spacing: 0.04em;
-
-  color: var(--cira-text-muted, #6f7c89);
 }
-
-
-/* INTERACTION */
 
 .cira-brand:hover .cira-brand__name {
   color: var(--cira-primary-hover, #2f3c4d);
@@ -77,165 +137,18 @@
 .cira-brand:focus-visible {
   outline: 3px solid var(--cira-focus, #5e83a6);
   outline-offset: 6px;
+
   border-radius: 4px;
 }
 
 
-/* TABLET */
-
-@media (max-width: 1023px) {
-
-  .cira-header {
-    height: 68px;
-  }
-
-  .cira-header__inner {
-    padding-left: 24px;
-    padding-right: 24px;
-  }
-
-  .cira-brand__name {
-    font-size: 22px;
-  }
-
-}
-
-
-/* MOBILE */
-
-@media (max-width: 767px) {
-
-  .cira-header {
-    height: 64px;
-  }
-
-  .cira-header__inner {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-
-  .cira-brand {
-    gap: 10px;
-  }
-
-  .cira-brand__name {
-    font-size: 20px;
-  }
-
-  .cira-brand__section {
-    padding-left: 10px;
-
-    font-size: 12px;
-    letter-spacing: 0.035em;
-  }
-
-}
-
 /* =========================================================
-   CIRA CLUB — FOOTER v1.0
-   ========================================================= */
-
-.cira-footer {
-  width: 100%;
-  margin-top: 64px;
-
-  background: var(--cira-primary, #38475a);
-  color: #ffffff;
-}
-
-.cira-footer__inner {
-  width: 100%;
-  max-width: var(--cira-content-max, 1180px);
-
-  margin: 0 auto;
-  padding: 30px 32px;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 32px;
-}
-
-.cira-footer__brand {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.cira-footer__name {
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-}
-
-.cira-footer__tagline {
-  font-size: 14px;
-  line-height: 1.45;
-  color: rgba(255, 255, 255, 0.72);
-}
-
-.cira-footer__meta {
-  flex-shrink: 0;
-
-  font-size: 13px;
-  font-weight: 500;
-
-  color: rgba(255, 255, 255, 0.68);
-}
-
-
-/* TABLET */
-
-@media (max-width: 1023px) {
-
-  .cira-footer {
-    margin-top: 48px;
-  }
-
-  .cira-footer__inner {
-    padding-left: 24px;
-    padding-right: 24px;
-  }
-
-}
-
-
-/* MOBILE */
-
-@media (max-width: 767px) {
-
-  .cira-footer {
-    margin-top: 40px;
-  }
-
-  .cira-footer__inner {
-    padding: 26px 16px;
-
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
-  }
-
-  .cira-footer__name {
-    font-size: 17px;
-  }
-
-  .cira-footer__tagline {
-    font-size: 14px;
-  }
-
-  .cira-footer__meta {
-    font-size: 13px;
-  }
-
-}
-
-/* =========================================================
-   CIRA CLUB — ISSUE ROAD MAP v1.0
+   2. ISSUE ROAD MAP
    ========================================================= */
 
 .cira-roadmap {
   width: 100%;
+
   margin: 0;
   padding: 22px 0 18px;
 
@@ -305,7 +218,9 @@
   width: 78px;
   min-width: 78px;
 
+  margin: 0;
   padding: 0;
+
   border: 0;
   background: transparent;
 
@@ -313,15 +228,6 @@
   flex-direction: column;
   align-items: center;
   gap: 9px;
-
-  font-family:
-    Inter,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Arial,
-    sans-serif;
 
   color: var(--cira-text-muted, #6f7c89);
 
@@ -348,22 +254,23 @@
 }
 
 
-/* CIRCLE */
+/* STOP CIRCLE */
 
 .cira-stop__circle {
+  position: relative;
+  z-index: 1;
+
   width: 58px;
   height: 58px;
+  flex: 0 0 58px;
 
   display: grid;
   place-items: center;
-
-  flex: 0 0 58px;
 
   border: 2px solid var(--cira-border-strong, #c8d2db);
   border-radius: 50%;
 
   background: var(--cira-surface, #ffffff);
-
   color: var(--cira-primary, #38475a);
 
   font-size: 16px;
@@ -378,34 +285,33 @@
 }
 
 
-/* LABEL */
+/* STOP LABEL */
 
 .cira-stop__label {
   width: 100%;
+
+  color: currentColor;
 
   font-size: 14px;
   font-weight: 600;
   line-height: 1.25;
 
   text-align: center;
-
   white-space: nowrap;
-
-  color: currentColor;
 }
 
 
 /* HOVER */
+
+.cira-stop:hover {
+  color: var(--cira-primary, #38475a);
+}
 
 .cira-stop:hover .cira-stop__circle {
   border-color: var(--cira-primary, #38475a);
   background: var(--cira-surface-soft, #f8fafc);
 
   transform: translateY(-1px);
-}
-
-.cira-stop:hover {
-  color: var(--cira-primary, #38475a);
 }
 
 
@@ -427,7 +333,14 @@
 }
 
 
-/* KEYBOARD FOCUS */
+/* COMPLETED — reserved */
+
+.cira-stop.is-completed .cira-stop__circle {
+  border-color: var(--cira-primary, #38475a);
+}
+
+
+/* FOCUS */
 
 .cira-stop:focus-visible {
   outline: none;
@@ -439,7 +352,7 @@
 }
 
 
-/* DISABLED — reserved for future use */
+/* DISABLED */
 
 .cira-stop:disabled {
   opacity: 0.55;
@@ -451,9 +364,393 @@
 }
 
 
-/* TABLET */
+/* =========================================================
+   3. ISSUE MAIN CONTAINER
+   ========================================================= */
+
+.cira-issue {
+  width: 100%;
+  max-width: var(--cira-content-max, 1180px);
+
+  margin: 0 auto;
+  padding: 40px 32px 0;
+}
+
+
+/* =========================================================
+   4. ISSUE IDENTITY
+   ========================================================= */
+
+.cira-issue__identity {
+  max-width: 920px;
+
+  margin: 0 0 36px;
+}
+
+.cira-issue__meta {
+  margin: 0 0 10px;
+
+  color: var(--cira-text-muted, #6f7c89);
+
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.4;
+
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+.cira-issue__title {
+  margin: 0;
+
+  color: var(--cira-text, #263442);
+
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.22;
+
+  letter-spacing: -0.025em;
+}
+
+
+/* =========================================================
+   5. CURRENT STOP HEADER
+   ========================================================= */
+
+.cira-stop-header {
+  max-width: 860px;
+
+  margin: 0 0 24px;
+}
+
+.cira-stop-header__eyebrow {
+  margin: 0 0 8px;
+
+  color: var(--cira-text-muted, #6f7c89);
+
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+
+  letter-spacing: 0.055em;
+}
+
+.cira-stop-header__title {
+  margin: 0 0 10px;
+
+  color: var(--cira-primary, #38475a);
+
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.cira-stop-header__instruction {
+  max-width: 760px;
+
+  margin: 0;
+
+  color: var(--cira-text, #263442);
+
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   6. DYNAMIC WORKING AREA
+   ========================================================= */
+
+.cira-working-area {
+  width: 100%;
+
+  padding: 32px;
+
+  background: var(--cira-surface, #ffffff);
+
+  border: 1px solid var(--cira-border, #dce4ea);
+  border-radius: var(--cira-radius-card, 16px);
+
+  box-shadow: 0 4px 18px rgba(38, 52, 66, 0.06);
+}
+
+
+/* =========================================================
+   7. AUDIO CARD
+   ========================================================= */
+
+.cira-audio-card {
+  width: 100%;
+  max-width: 760px;
+}
+
+.cira-audio-card__label {
+  margin: 0 0 8px;
+
+  color: var(--cira-text-muted, #6f7c89);
+
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.4;
+
+  letter-spacing: 0.06em;
+}
+
+.cira-audio-card__title {
+  margin: 0 0 6px;
+
+  color: var(--cira-text, #263442);
+
+  font-size: 19px;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.cira-audio-card__hint {
+  margin: 0 0 18px;
+
+  color: var(--cira-text-muted, #6f7c89);
+
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.cira-audio {
+  display: block;
+
+  width: 100%;
+  max-width: 720px;
+
+  margin: 0;
+}
+
+
+/* =========================================================
+   8. ISSUE NAVIGATION
+   ========================================================= */
+
+.cira-issue-navigation {
+  width: 100%;
+
+  margin: 28px 0 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+}
+
+
+/* =========================================================
+   9. BUTTONS
+   ========================================================= */
+
+.cira-button {
+  min-height: 44px;
+
+  padding: 10px 18px;
+
+  border-radius: var(--cira-radius-control, 10px);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+
+/* PRIMARY BUTTON */
+
+.cira-button--primary {
+  border: 1px solid var(--cira-primary, #38475a);
+
+  background: var(--cira-primary, #38475a);
+  color: #ffffff;
+}
+
+.cira-button--primary:hover {
+  border-color: var(--cira-primary-hover, #2f3c4d);
+  background: var(--cira-primary-hover, #2f3c4d);
+
+  transform: translateY(-1px);
+}
+
+
+/* SECONDARY BUTTON */
+
+.cira-button--secondary {
+  border: 1px solid var(--cira-border-strong, #c8d2db);
+
+  background: var(--cira-surface, #ffffff);
+  color: var(--cira-primary, #38475a);
+}
+
+.cira-button--secondary:hover {
+  border-color: var(--cira-primary, #38475a);
+
+  background: var(--cira-surface-soft, #f8fafc);
+}
+
+
+/* BUTTON FOCUS */
+
+.cira-button:focus-visible {
+  outline: 3px solid var(--cira-focus, #5e83a6);
+  outline-offset: 3px;
+}
+
+
+/* BUTTON DISABLED */
+
+.cira-button:disabled,
+.cira-button[aria-disabled="true"] {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+  transform: none;
+}
+
+
+/* =========================================================
+   10. GENERIC CONTENT CARD
+   ========================================================= */
+
+.cira-card {
+  padding: 24px 32px;
+
+  background: var(--cira-surface, #ffffff);
+
+  border: 1px solid var(--cira-border, #dce4ea);
+  border-radius: var(--cira-radius-card, 16px);
+
+  box-shadow: 0 4px 18px rgba(38, 52, 66, 0.06);
+}
+
+.cira-card--soft {
+  background: var(--cira-surface-soft, #f8fafc);
+
+  box-shadow: none;
+}
+
+
+/* =========================================================
+   11. LEARNING TEXT
+   ========================================================= */
+
+.cira-learning-text {
+  max-width: 820px;
+
+  color: var(--cira-text, #263442);
+
+  font-size: 18px;
+  line-height: 1.65;
+}
+
+.cira-learning-text p {
+  margin: 0 0 18px;
+}
+
+.cira-learning-text p:last-child {
+  margin-bottom: 0;
+}
+
+
+/* =========================================================
+   12. FOOTER
+   ========================================================= */
+
+.cira-footer {
+  width: 100%;
+
+  margin-top: 64px;
+
+  background: var(--cira-primary, #38475a);
+  color: #ffffff;
+}
+
+.cira-footer__inner {
+  width: 100%;
+  max-width: var(--cira-content-max, 1180px);
+
+  margin: 0 auto;
+  padding: 30px 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 32px;
+}
+
+.cira-footer__brand {
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+}
+
+.cira-footer__name {
+  color: #ffffff;
+
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+
+  letter-spacing: -0.01em;
+}
+
+.cira-footer__tagline {
+  color: rgba(255, 255, 255, 0.72);
+
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.cira-footer__meta {
+  flex-shrink: 0;
+
+  color: rgba(255, 255, 255, 0.68);
+
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   13. TABLET
+   ========================================================= */
 
 @media (max-width: 1023px) {
+
+  .cira-header {
+    height: 68px;
+  }
+
+  .cira-header__inner {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .cira-brand__name {
+    font-size: 22px;
+  }
+
 
   .cira-roadmap__scroll {
     padding-left: 24px;
@@ -469,12 +766,64 @@
     min-width: 74px;
   }
 
+
+  .cira-issue {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+
+  .cira-footer {
+    margin-top: 48px;
+  }
+
+  .cira-footer__inner {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
 }
 
 
-/* MOBILE */
+/* =========================================================
+   14. MOBILE
+   ========================================================= */
 
 @media (max-width: 767px) {
+
+  body {
+    font-size: 16px;
+  }
+
+
+  /* HEADER */
+
+  .cira-header {
+    height: 64px;
+  }
+
+  .cira-header__inner {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .cira-brand {
+    gap: 10px;
+  }
+
+  .cira-brand__name {
+    font-size: 20px;
+  }
+
+  .cira-brand__section {
+    padding-left: 10px;
+
+    font-size: 12px;
+    letter-spacing: 0.035em;
+  }
+
+
+  /* ROAD MAP */
 
   .cira-roadmap {
     padding-top: 18px;
@@ -506,188 +855,6 @@
     font-size: 15px;
   }
 
-   /* =========================================================
-   CIRA CLUB — ISSUE SHELL / STOP 1
-   ========================================================= */
-
-.cira-issue {
-  width: 100%;
-  max-width: var(--cira-content-max, 1180px);
-
-  margin: 0 auto;
-  padding: 40px 32px 0;
-}
-
-
-/* ISSUE IDENTITY */
-
-.cira-issue__identity {
-  max-width: 900px;
-  margin-bottom: 36px;
-}
-
-.cira-issue__meta {
-  margin-bottom: 10px;
-
-  color: var(--cira-text-muted, #6f7c89);
-
-  font-size: 14px;
-  font-weight: 650;
-  letter-spacing: 0.055em;
-  text-transform: uppercase;
-}
-
-.cira-issue__title {
-  margin: 0;
-
-  color: var(--cira-text, #263442);
-
-  font-size: 32px;
-  font-weight: 700;
-  line-height: 1.22;
-  letter-spacing: -0.025em;
-}
-
-
-/* CURRENT STOP HEADER */
-
-.cira-stop-header {
-  max-width: 860px;
-  margin-bottom: 24px;
-}
-
-.cira-stop-header__eyebrow {
-  margin-bottom: 8px;
-
-  color: var(--cira-text-muted, #6f7c89);
-
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.055em;
-}
-
-.cira-stop-header__title {
-  margin: 0 0 10px;
-
-  color: var(--cira-primary, #38475a);
-
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 1.25;
-}
-
-.cira-stop-header__instruction {
-  max-width: 760px;
-  margin: 0;
-
-  color: var(--cira-text, #263442);
-
-  font-size: 17px;
-  line-height: 1.6;
-}
-
-
-/* WORKING AREA */
-
-.cira-working-area {
-  width: 100%;
-
-  padding: 32px;
-
-  background: var(--cira-surface, #ffffff);
-
-  border: 1px solid var(--cira-border, #dce4ea);
-  border-radius: 16px;
-
-  box-shadow: 0 4px 18px rgba(38, 52, 66, 0.06);
-}
-
-
-/* AUDIO CARD */
-
-.cira-audio-card {
-  max-width: 760px;
-}
-
-.cira-audio-card__label {
-  margin-bottom: 8px;
-
-  color: var(--cira-text-muted, #6f7c89);
-
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-}
-
-.cira-audio-card__title {
-  margin: 0 0 6px;
-
-  color: var(--cira-text, #263442);
-
-  font-size: 19px;
-  font-weight: 650;
-}
-
-.cira-audio-card__hint {
-  margin: 0 0 18px;
-
-  color: var(--cira-text-muted, #6f7c89);
-
-  font-size: 15px;
-  line-height: 1.5;
-}
-
-.cira-audio {
-  display: block;
-
-  width: 100%;
-  max-width: 720px;
-}
-
-
-/* TABLET */
-
-@media (max-width: 1023px) {
-
-  .cira-issue {
-    padding-left: 24px;
-    padding-right: 24px;
-  }
-
-}
-
-
-/* MOBILE */
-
-@media (max-width: 767px) {
-
-  .cira-issue {
-    padding: 28px 16px 0;
-  }
-
-  .cira-issue__identity {
-    margin-bottom: 30px;
-  }
-
-  .cira-issue__title {
-    font-size: 26px;
-    line-height: 1.25;
-  }
-
-  .cira-stop-header__title {
-    font-size: 21px;
-  }
-
-  .cira-stop-header__instruction {
-    font-size: 16px;
-  }
-
-  .cira-working-area {
-    padding: 20px 18px;
-  }
-
-}
-
   .cira-stop__label {
     font-size: 14px;
   }
@@ -697,6 +864,170 @@
     left: calc(50% + 26px);
 
     width: 28px;
+  }
+
+
+  /* ISSUE */
+
+  .cira-issue {
+    padding: 28px 16px 0;
+  }
+
+  .cira-issue__identity {
+    margin-bottom: 30px;
+  }
+
+  .cira-issue__meta {
+    margin-bottom: 8px;
+
+    font-size: 13px;
+  }
+
+  .cira-issue__title {
+    font-size: 26px;
+    line-height: 1.25;
+  }
+
+
+  /* STOP HEADER */
+
+  .cira-stop-header {
+    margin-bottom: 20px;
+  }
+
+  .cira-stop-header__eyebrow {
+    font-size: 13px;
+  }
+
+  .cira-stop-header__title {
+    font-size: 21px;
+  }
+
+  .cira-stop-header__instruction {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+
+  /* WORKING AREA */
+
+  .cira-working-area {
+    padding: 20px 18px;
+  }
+
+
+  /* AUDIO */
+
+  .cira-audio-card__title {
+    font-size: 18px;
+  }
+
+  .cira-audio-card__hint {
+    font-size: 14px;
+  }
+
+
+  /* NAVIGATION */
+
+  .cira-issue-navigation {
+    margin-top: 22px;
+
+    flex-wrap: wrap;
+  }
+
+  .cira-issue-navigation .cira-button {
+    min-height: 44px;
+  }
+
+
+  /* CARDS */
+
+  .cira-card {
+    padding: 20px 18px;
+  }
+
+
+  /* LEARNING TEXT */
+
+  .cira-learning-text {
+    font-size: 17px;
+    line-height: 1.65;
+  }
+
+
+  /* FOOTER */
+
+  .cira-footer {
+    margin-top: 40px;
+  }
+
+  .cira-footer__inner {
+    padding: 26px 16px;
+
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 20px;
+  }
+
+  .cira-footer__name {
+    font-size: 17px;
+  }
+
+  .cira-footer__tagline {
+    font-size: 14px;
+  }
+
+  .cira-footer__meta {
+    font-size: 13px;
+  }
+
+}
+
+
+/* =========================================================
+   15. VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+  .cira-brand__name {
+    font-size: 19px;
+  }
+
+  .cira-brand__section {
+    font-size: 11px;
+  }
+
+  .cira-issue__title {
+    font-size: 24px;
+  }
+
+  .cira-working-area {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+}
+
+
+/* =========================================================
+   16. REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 
 }
