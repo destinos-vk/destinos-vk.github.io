@@ -130,3 +130,102 @@
   }
 
 }
+
+/* =========================================================
+   CIRA CLUB — FOOTER v1.0
+   ========================================================= */
+
+.cira-footer {
+  width: 100%;
+  margin-top: 64px;
+
+  background: var(--cira-primary, #38475a);
+  color: #ffffff;
+}
+
+.cira-footer__inner {
+  width: 100%;
+  max-width: var(--cira-content-max, 1180px);
+
+  margin: 0 auto;
+  padding: 30px 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.cira-footer__brand {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cira-footer__name {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.cira-footer__tagline {
+  font-size: 14px;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.cira-footer__meta {
+  flex-shrink: 0;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  color: rgba(255, 255, 255, 0.68);
+}
+
+
+/* TABLET */
+
+@media (max-width: 1023px) {
+
+  .cira-footer {
+    margin-top: 48px;
+  }
+
+  .cira-footer__inner {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+}
+
+
+/* MOBILE */
+
+@media (max-width: 767px) {
+
+  .cira-footer {
+    margin-top: 40px;
+  }
+
+  .cira-footer__inner {
+    padding: 26px 16px;
+
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .cira-footer__name {
+    font-size: 17px;
+  }
+
+  .cira-footer__tagline {
+    font-size: 14px;
+  }
+
+  .cira-footer__meta {
+    font-size: 13px;
+  }
+
+}
