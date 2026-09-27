@@ -1,9 +1,16 @@
 /* =========================================================
    CIRA CLUB — cira-shell.css
-   Version: 1.5
-   Date: 2026-09-26
+   Version: 1.6
+   Date: 2026-09-27
 
-   Fixes:
+   v1.6:
+   - fixed Working Area Header for every page
+   - title left / local selector right
+   - stable shell geometry / no-jitter rule
+   - scrollbar space reserved
+   - legacy Listen classes mapped to the same shared component
+
+   Previous v1.5:
    - 3-item Issue Road Map: Listen / Language / Speaking Engine
    - no orphan labels or overlapping roadmap items
    - MAIN STORY + Audio | Script locked to one top row
@@ -26,6 +33,13 @@
   --cira-radius-card: 16px;
   --cira-radius-control: 10px;
   --cira-content-max: 1180px;
+
+  /* Stable shell geometry */
+  --cira-issue-identity-min-height: 78px;
+  --cira-stop-header-min-height: 106px;
+  --cira-working-header-min-height: 48px;
+  --cira-working-header-gap: 24px;
+  --cira-working-header-margin-bottom: 28px;
 }
 
 *,
@@ -37,6 +51,7 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -242,6 +257,7 @@ svg {
 
 .cira-issue__identity {
   max-width: 920px;
+  min-height: var(--cira-issue-identity-min-height);
   margin: 0 0 34px;
 }
 
@@ -270,6 +286,7 @@ svg {
 
 .cira-stop-header {
   max-width: 860px;
+  min-height: var(--cira-stop-header-min-height);
   margin: 0 0 24px;
 }
 
@@ -315,15 +332,18 @@ svg {
    MAIN STORY TOP BAR
    ========================================================= */
 
+.cira-working-header,
 .cira-story-topbar {
   width: 100%;
-  margin: 0 0 28px;
+  min-height: var(--cira-working-header-min-height);
+  margin: 0 0 var(--cira-working-header-margin-bottom);
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: 24px;
+  gap: var(--cira-working-header-gap);
 }
 
+.cira-working-title,
 .cira-story-title {
   margin: 0;
   color: var(--cira-primary);
@@ -380,6 +400,49 @@ svg {
 .cira-view-selector__button:focus-visible {
   outline: 3px solid var(--cira-focus);
   outline-offset: 2px;
+}
+
+
+/* =========================================================
+   GENERIC WORKING AREA HEADER / SELECTOR
+   ========================================================= */
+
+.cira-working-header > :first-child,
+.cira-story-topbar > :first-child {
+  justify-self: start;
+}
+
+.cira-working-header > :last-child,
+.cira-story-topbar > :last-child {
+  justify-self: end;
+}
+
+.cira-view-selector__link {
+  min-width: 104px;
+  min-height: 40px;
+  padding: 8px 18px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cira-text-muted);
+  font-size: 15px;
+  font-weight: 650;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.cira-view-selector__link:hover,
+.cira-view-selector__link:focus-visible {
+  color: var(--cira-primary);
+  outline: none;
+}
+
+.cira-view-selector__link.is-active {
+  background: var(--cira-primary);
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(38, 52, 66, 0.12);
 }
 
 /* =========================================================
@@ -690,11 +753,14 @@ svg {
     padding: 20px 18px;
   }
 
+  .cira-working-header,
   .cira-story-topbar {
+    min-height: 44px;
     gap: 10px;
     margin-bottom: 24px;
   }
 
+  .cira-working-title,
   .cira-story-title {
     font-size: 20px;
     white-space: nowrap;
@@ -704,7 +770,8 @@ svg {
     padding: 3px;
   }
 
-  .cira-view-selector__button {
+  .cira-view-selector__button,
+  .cira-view-selector__link {
     min-width: 62px;
     min-height: 38px;
     padding: 7px 9px;
@@ -764,6 +831,7 @@ svg {
     padding-right: 14px;
   }
 
+  .cira-working-title,
   .cira-story-title {
     font-size: 18px;
   }
