@@ -2,22 +2,28 @@
 =========================================================
 CIRA CLUB — Shared Issue Road Map
 File: cira-roadmap.js
-Version: 1.0
+Version: 1.1
 Status: PILOT SHARED COMPONENT
-Date: 2026-09-27
+Date: 2026-09-28
 
 Purpose:
 One shared Road Map renderer for all CIRA CLUB Issue pages.
 
+v1.1:
+- NEWS-001 STOP 3 Fluency Training activated.
+- STOP 3 route: /ciraclub/CIRA-NEWS-001-AD10-BBU/
+- Usage example corrected to include data-cira-roadmap.
+
 Usage:
 <div
   id="cira-roadmap-root"
+  data-cira-roadmap
   data-cira-issue="NEWS-001"
   data-cira-active-stop="3"
 ></div>
 
 <script
-  src="https://destinos-vk.github.io/cira-roadmap.js?v=1.0"
+  src="https://destinos-vk.github.io/cira-roadmap.js?v=1.1"
   defer
 ></script>
 
@@ -31,7 +37,7 @@ IMPORTANT:
 (function () {
   "use strict";
 
-  const COMPONENT_VERSION = "1.0";
+  const COMPONENT_VERSION = "1.1";
 
   const STOP_DEFINITIONS = [
     { id: 1, label: "Listen" },
@@ -53,13 +59,12 @@ IMPORTANT:
     "NEWS-001": {
       1: "/ciraclub/cira-club-homepage/",
       2: "/ciraclub/CIRA-NEWS-001-Vocabulary/",
-      3: null,
+      3: "/ciraclub/CIRA-NEWS-001-AD10-BBU/",
       4: null,
       5: null,
       6: null
     }
   };
-
 
   function injectStyles() {
     if (document.getElementById("cira-roadmap-component-styles")) {
@@ -126,7 +131,6 @@ IMPORTANT:
     document.head.appendChild(style);
   }
 
-
   function createStop(stop, activeStop, routes) {
     const isActive = stop.id === activeStop;
     const href = routes ? routes[stop.id] : null;
@@ -152,6 +156,10 @@ IMPORTANT:
     }
 
     if (href && isActive) {
+      /*
+       * The current STOP does not need to reload itself.
+       * Keep it semantically active, not clickable.
+       */
       node.dataset.href = href;
     }
 
@@ -173,7 +181,6 @@ IMPORTANT:
 
     return node;
   }
-
 
   function renderRoadMap(root) {
     const issue =
@@ -225,7 +232,6 @@ IMPORTANT:
     root.replaceWith(nav);
   }
 
-
   function init() {
     injectStyles();
 
@@ -240,7 +246,6 @@ IMPORTANT:
       COMPONENT_VERSION
     );
   }
-
 
   if (document.readyState === "loading") {
     document.addEventListener(
