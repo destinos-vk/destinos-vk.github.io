@@ -2,17 +2,18 @@
 =========================================================
 CIRA CLUB — Shared Issue Road Map
 File: cira-roadmap.js
-Version: 1.1
+Version: 1.2
 Status: PILOT SHARED COMPONENT
 Date: 2026-09-28
 
 Purpose:
 One shared Road Map renderer for all CIRA CLUB Issue pages.
 
-v1.1:
-- NEWS-001 STOP 3 Fluency Training activated.
-- STOP 3 route: /ciraclub/CIRA-NEWS-001-AD10-BBU/
-- Usage example corrected to include data-cira-roadmap.
+v1.2:
+- NEWS-001 canonical URL registry synchronized.
+- STOP 3 default route corrected to /ciraclub/NEWS-001-AD10-BBU/.
+- Fluency page canonical route recorded as /ciraclub/CIRA-NEWS-001-AD20-Fluency/.
+- Shared component remains the single Road Map source for all NEWS-001 pages.
 
 Usage:
 <div
@@ -23,7 +24,7 @@ Usage:
 ></div>
 
 <script
-  src="https://destinos-vk.github.io/cira-roadmap.js?v=1.1"
+  src="https://destinos-vk.github.io/cira-roadmap.js?v=1.2"
   defer
 ></script>
 
@@ -37,7 +38,7 @@ IMPORTANT:
 (function () {
   "use strict";
 
-  const COMPONENT_VERSION = "1.1";
+  const COMPONENT_VERSION = "1.2";
 
   const STOP_DEFINITIONS = [
     { id: 1, label: "Listen" },
@@ -59,10 +60,25 @@ IMPORTANT:
     "NEWS-001": {
       1: "/ciraclub/cira-club-homepage/",
       2: "/ciraclub/CIRA-NEWS-001-Vocabulary/",
-      3: "/ciraclub/CIRA-NEWS-001-AD10-BBU/",
+      3: "/ciraclub/NEWS-001-AD10-BBU/",
       4: null,
       5: null,
       6: null
+    }
+  };
+
+  /*
+   * Canonical NEWS-001 page registry.
+   * The Road Map uses only the default route of each STOP.
+   * Local selectors use the specific function routes below.
+   */
+  const PAGE_ROUTES = {
+    "NEWS-001": {
+      listen: "/ciraclub/cira-club-homepage/",
+      vocabulary: "/ciraclub/CIRA-NEWS-001-Vocabulary/",
+      grammar: "/ciraclub/CIRA-NEWS-001-GRAMMA/",
+      bbu: "/ciraclub/NEWS-001-AD10-BBU/",
+      fluency: "/ciraclub/CIRA-NEWS-001-AD20-Fluency/"
     }
   };
 
@@ -156,10 +172,6 @@ IMPORTANT:
     }
 
     if (href && isActive) {
-      /*
-       * The current STOP does not need to reload itself.
-       * Keep it semantically active, not clickable.
-       */
       node.dataset.href = href;
     }
 
