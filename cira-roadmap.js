@@ -2,12 +2,13 @@
 =========================================================
 CIRA CLUB — Shared Issue Road Map
 File: cira-roadmap.js
-Version: 1.6
+Version: 1.7
 Status: PILOT SHARED COMPONENT
 Date: 2026-09-30
 
 Purpose:
-One shared Road Map renderer for all CIRA CLUB Issue pages.
+One shared Road Map renderer for all CIRA CLUB Issue pages,
+plus registered sibling-route activation for drill selectors.
 
 IMPORTANT:
 - Internal methodological STOP order is fixed.
@@ -20,7 +21,7 @@ IMPORTANT:
 */
 (function(){
   "use strict";
-  const COMPONENT_VERSION="1.6";
+  const COMPONENT_VERSION="1.7";
   const STOP_DEFINITIONS=[
     {id:1,label:"Listen"},
     {id:2,label:"Language"},
@@ -56,6 +57,11 @@ IMPORTANT:
       dialog:"https://destinos-vk.github.io/ciraclub/drills/CIRA-NEWS-AD80/"
     }
   };
+  const SIBLING_KEYS=[
+    ["AD-31","substitution"],["AD-32","response"],["AD-33","translation"],
+    ["AD-40","replacement"],["AD-50","variation"],["AD-60","review"],
+    ["AD-70","narrative"],["AD-80","dialog"]
+  ];
   function injectStyles(){
     if(document.getElementById("cira-roadmap-component-styles"))return;
     const style=document.createElement("style");
@@ -94,6 +100,35 @@ IMPORTANT:
     STOP_DEFINITIONS.forEach(stop=>track.appendChild(createStop(stop,activeStop,routes)));
     inner.appendChild(track);nav.appendChild(inner);root.replaceWith(nav);
   }
-  function init(){injectStyles();const roots=Array.from(document.querySelectorAll("[data-cira-roadmap], #cira-roadmap-root, .cira-roadmap-root"));[...new Set(roots)].forEach(renderRoadMap);console.info("CIRA shared Road Map v"+COMPONENT_VERSION)}
+  function activateSiblingRoutes(issue){
+    const routes=PAGE_ROUTES[issue]||{};
+    document.querySelectorAll(".cira-view-selector__link").forEach(node=>{
+      if(node.classList.contains("is-active"))return;
+      const label=(node.textContent||"").trim();
+      const match=SIBLING_KEYS.find(([code])=>label.includes(code));
+      if(!match)return;
+      const href=routes[match[1]];
+      if(!href)return;
+      if(node.tagName==="A"){
+        node.href=href;
+        node.classList.remove("is-disabled");
+        node.removeAttribute("aria-disabled");
+        return;
+      }
+      const link=document.createElement("a");
+      link.className=node.className.replace(/\bis-disabled\b/g,"").replace(/\s+/g," ").trim();
+      link.href=href;
+      link.textContent=node.textContent;
+      node.replaceWith(link);
+    });
+  }
+  function init(){
+    injectStyles();
+    const roots=Array.from(document.querySelectorAll("[data-cira-roadmap], #cira-roadmap-root, .cira-roadmap-root"));
+    const issue=roots[0]?.dataset?.ciraIssue||"NEWS-001";
+    [...new Set(roots)].forEach(renderRoadMap);
+    activateSiblingRoutes(issue);
+    console.info("CIRA shared Road Map v"+COMPONENT_VERSION);
+  }
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});else init();
 })();
