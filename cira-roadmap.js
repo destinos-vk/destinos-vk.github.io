@@ -2,7 +2,7 @@
 =========================================================
 CIRA CLUB — Shared Issue Road Map
 File: cira-roadmap.js
-Version: 1.5
+Version: 1.6
 Status: PILOT SHARED COMPONENT
 Date: 2026-09-30
 
@@ -20,7 +20,7 @@ IMPORTANT:
 */
 (function(){
   "use strict";
-  const COMPONENT_VERSION="1.5";
+  const COMPONENT_VERSION="1.6";
   const STOP_DEFINITIONS=[
     {id:1,label:"Listen"},
     {id:2,label:"Language"},
@@ -53,7 +53,7 @@ IMPORTANT:
       variation:"https://espanamania.es/ciraclub/drills/CIRA-NEWS-AD50/",
       review:"https://espanamania.es/ciraclub/drills/CIRA-NEWS-AD60/",
       narrative:"https://destinos-vk.github.io/ciraclub/drills/CIRA-NEWS-AD70/",
-      dialog:null
+      dialog:"https://destinos-vk.github.io/ciraclub/drills/CIRA-NEWS-AD80/"
     }
   };
   function injectStyles(){
