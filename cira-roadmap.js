@@ -2,9 +2,9 @@
 =========================================================
 CIRA CLUB — Shared Issue Road Map
 File: cira-roadmap.js
-Version: 1.3
+Version: 1.4
 Status: PILOT SHARED COMPONENT
-Date: 2026-09-28
+Date: 2026-09-30
 
 Purpose:
 One shared Road Map renderer for all CIRA CLUB Issue pages.
@@ -18,7 +18,7 @@ Usage:
 ></div>
 
 <script
-  src="https://destinos-vk.github.io/cira-roadmap.js?v=1.3"
+  src="https://destinos-vk.github.io/cira-roadmap.js"
   defer
 ></script>
 
@@ -26,13 +26,14 @@ IMPORTANT:
 - Internal methodological STOP order is fixed.
 - Public links are enabled only when a real page exists.
 - No dead links are generated.
+- Shared component URL is canonical and unversioned.
 =========================================================
 */
 
 (function () {
   "use strict";
 
-  const COMPONENT_VERSION = "1.3";
+  const COMPONENT_VERSION = "1.4";
 
   const STOP_DEFINITIONS = [
     { id: 1, label: "Listen" },
@@ -56,7 +57,7 @@ IMPORTANT:
       2: "/ciraclub/CIRA-NEWS-001-Vocabulary/",
       3: "/ciraclub/NEWS-001-AD10-BBU/",
       4: "/ciraclub/drills/CIRA-NEWS-AD31/",
-      5: null,
+      5: "/ciraclub/drills/CIRA-NEWS-AD40/",
       6: null
     }
   };
@@ -71,7 +72,12 @@ IMPORTANT:
       grammar: "/ciraclub/CIRA-NEWS-001-GRAMMA/",
       bbu: "/ciraclub/NEWS-001-AD10-BBU/",
       fluency: "/ciraclub/CIRA-NEWS-001-AD20-Fluency/",
-      substitution: "/ciraclub/drills/CIRA-NEWS-AD31/"
+      substitution: "/ciraclub/drills/CIRA-NEWS-AD31/",
+      response: "/ciraclub/drills/CIRA-NEWS-AD32/",
+      translation: "/ciraclub/drills/CIRA-NEWS-AD33/",
+      replacement: "/ciraclub/drills/CIRA-NEWS-AD40/",
+      variation: "/ciraclub/drills/CIRA-NEWS-AD50/",
+      review: "/ciraclub/drills/CIRA-NEWS-AD60/"
     }
   };
 
@@ -244,11 +250,13 @@ IMPORTANT:
   function init() {
     injectStyles();
 
-    document
-      .querySelectorAll(
-        "[data-cira-roadmap]"
+    const roots = Array.from(
+      document.querySelectorAll(
+        "[data-cira-roadmap], #cira-roadmap-root, .cira-roadmap-root"
       )
-      .forEach(renderRoadMap);
+    );
+
+    [...new Set(roots)].forEach(renderRoadMap);
 
     console.info(
       "CIRA shared Road Map v" +
