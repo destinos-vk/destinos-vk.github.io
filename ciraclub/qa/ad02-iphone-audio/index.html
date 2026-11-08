@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow"><title>CIRA — iPhone audio QA (isolated)</title>
+<style>
+:root{font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif;background:#f8f6f0;color:#1c303c}
+body{margin:0;padding:18px 14px 50px}main{max-width:620px;margin:auto}h1{font-size:22px;line-height:1.2}p{line-height:1.5}.title{color:#bc4d25;font-size:32px;font-weight:800;margin:8px 0 20px}
+section{background:#fff;border:1px solid #ddd7c6;border-radius:12px;padding:14px;margin:12px 0}
+h2{font-size:16px;margin:0 0 5px}.help{color:#526473;font-size:13px}
+button{font:700 15px/1.3 system-ui;background:#193d51;color:#fff;border:0;border-radius:9px;padding:13px 16px;margin:7px 6px 6px 0;min-height:44px}
+button:disabled{opacity:.45}button.mark{background:#8d4c36}.summary{font-family:ui-monospace,monospace;font-size:13px;white-space:pre-wrap;word-wrap:break-word;background:#e9edf0;padding:10px;border-radius:8px}
+strong{font-weight:800}
+</style></head>
+<body><main>
+<h1>CIRA · iPhone-only audio diagnostic</h1>
+<p>Независимый тест для Safari на iPhone. <strong>Ни Ghost, ни уроки, ни R2 не изменяются.</strong></p>
+<p class="title" lang="es">el aceite</p>
+<button id="load">1. Получить аудио</button>
+<p class="help">Исходный MP3 загружается один раз. WAV создаются локально без включения звукового выхода. Для чистого опыта после подготовки первым нажмите A или D.</p>
+<section><h2>A — исходный MP3</h2><p class="help">Без паузы, отдельный аудиоэлемент на каждое нажатие</p><button data-play="a" disabled>▶ Слушать A</button><button class="mark" data-mark="a" disabled>Обрезало</button><span id="count-a">0 / 0</span></section>
+<section><h2>D — WAV без паузы</h2><p class="help">Та же речь, другой формат, нет защитного интервала</p><button data-play="d" disabled>▶ Слушать D</button><button class="mark" data-mark="d" disabled>Обрезало</button><span id="count-d">0 / 0</span></section>
+<section><h2>B — WAV + 700 мс тишины</h2><p class="help">Точная цифровая тишина перед речью</p><button data-play="b" disabled>▶ Слушать B</button><button class="mark" data-mark="b" disabled>Обрезало</button><span id="count-b">0 / 0</span></section>
+<section><h2>C — WAV + 700 мс слабого шума</h2><p class="help">Проверка «пробуждения» аудиовыхода</p><button data-play="c" disabled>▶ Слушать C</button><button class="mark" data-mark="c" disabled>Обрезало</button><span id="count-c">0 / 0</span></section>
+<section><h2>Журнал</h2><p class="help">После прослушивания нажимайте «Обрезало» только если пропало начало. В конце можно скопировать результаты.</p><div id="status" class="summary">Аудио не загружено.</div><button id="copy" disabled>Скопировать результат</button></section>
+<p class="help">Один и тот же источник ElevenLabs /club-tts. В документ не передаются результаты или данные устройства. Если в режиме A обрезает, а в B и C нет — это свидетельство проблемы на участке начала воспроизведения на iPhone. Если все четыре работают, проблема может требовать условий Ghost/страницы урока.</p>
+<script>
+(()=>{"use strict";
+const endpoint="https://cira-tts-gateway.cira-learning.workers.dev/club-tts";
+const urls={}, counts={a:[0,0],d:[0,0],b:[0,0],c:[0,0]},log=[],els={};
+let active=null,last="";
+const status=document.querySelector("#status");
+function note(s){log.push(s);status.textContent=log.slice(-14).join("\n");}
+function mkWav(decoded,padding,noiseOn){
+ const rate=decoded.sampleRate,ch=Math.min(2,decoded.numberOfChannels);
+ const frames=decoded.length,pad=Math.round(rate*padding),total=frames+pad;
+ const buf=new ArrayBuffer(44+total*ch*2),v=new DataView(buf); let p=0;
+ const str=s=>{for(let i=0;i<s.length;i++)v.setUint8(p++,s.charCodeAt(i))};
+ const u32=n=>{v.setUint32(p,n,true);p+=4},u16=n=>{v.setUint16(p,n,true);p+=2};
+ str("RIFF");u32(36+total*ch*2);str("WAVEfmt ");u32(16);u16(1);u16(ch);u32(rate);
+ u32(rate*ch*2);u16(ch*2);u16(16);str("data");u32(total*ch*2);
+ const src=Array.from({length:ch},(_,i)=>decoded.getChannelData(i));
+ let state=312311;
+ function rand(){state^=state<<13;state^=state>>>17;state^=state<<5;return ((state>>>0)/4294967295*2-1)*0.018}
+ for(let i=0;i<total;i++){
+  const fade=Math.max(0,Math.min(1,i/(rate*.025),(pad-i)/(rate*.025)));
+  const sampleNoise=noiseOn && i<pad ? rand()*fade:0;
+  for(let j=0;j<ch;j++){
+   const x=i<pad?sampleNoise:src[j][i-pad];const y=Math.max(-1,Math.min(1,x));
+   v.setInt16(p,Math.round(y<0?y*32768:y*32767),true);p+=2;
+  }
+ }
+ return URL.createObjectURL(new Blob([buf],{type:"audio/wav"}));
+}
+const loadButton=document.querySelector("#load");
+loadButton.onclick=async()=>{
+ loadButton.disabled=true;note("Загружаю единый MP3 и готовлю WAV…");
+ try{
+  const r=await fetch(endpoint,{method:"POST",mode:"cors",cache:"no-store",headers:{"content-type":"application/json"},body:JSON.stringify({text:"el aceite",lang:"es"})});
+  if(!r.ok)throw Error("HTTP "+r.status);
+  const blob=await r.blob();if(!blob.size)throw Error("Пустой MP3");
+  // OfflineAudioContext decodes but does not activate iPhone's audio output.
+  const Offline=window.OfflineAudioContext||window.webkitOfflineAudioContext;
+  if(!Offline)throw Error("OfflineAudioContext unsupported");
+  const decoder=new Offline(1,1,44100);
+  const decoded=await decoder.decodeAudioData(await blob.arrayBuffer());
+  urls.a=URL.createObjectURL(blob);
+  urls.d=mkWav(decoded,0,false);
+  urls.b=mkWav(decoded,.7,false);
+  urls.c=mkWav(decoded,.7,true);
+  document.querySelectorAll("[data-play],[data-mark]").forEach(b=>b.disabled=false);
+  document.querySelector("#copy").disabled=false;
+  note("Готово: "+decoded.duration.toFixed(2)+" с; R2 "+(r.headers.get("X-CIRA-Cache")||"?")+". Первым слушайте A.");
+ }catch(e){loadButton.disabled=false;note("Ошибка: "+e.message);}
+};
+document.querySelectorAll("[data-play]").forEach(btn=>btn.onclick=async()=>{
+ const mode=btn.dataset.play;
+ if(active){active.pause();active.removeAttribute("src");active.load();active=null;}
+ const audio=new Audio();active=audio;audio.preload="auto";audio.src=urls[mode];last=mode;
+ counts[mode][0]++;document.querySelector("#count-"+mode).textContent=counts[mode].join(" / ");
+ note(mode.toUpperCase()+" запуск "+counts[mode][0]+" — слушайте начальное «e»");
+ audio.onended=()=>{if(active===audio)active=null};
+ audio.onerror=()=>note("Ошибка HTMLAudioElement: "+mode);
+ try{await audio.play()}catch(e){note("play() ошибка "+mode+": "+e.message);}
+});
+document.querySelectorAll("[data-mark]").forEach(btn=>btn.onclick=()=>{
+ const mode=btn.dataset.mark;if(counts[mode][1]>=counts[mode][0])return;
+ counts[mode][1]++;document.querySelector("#count-"+mode).textContent=counts[mode].join(" / ");
+ note("ОБРЕЗАНО: "+mode.toUpperCase()+" ("+counts[mode][1]+"/"+counts[mode][0]+")");
+});
+document.querySelector("#copy").onclick=()=>{
+ const result="CIRA AD-02 iPhone QA\n"+Object.entries(counts).map(([k,c])=>k.toUpperCase()+": "+c[1]+" clipped of "+c[0]+" plays").join("\n")+"\n"+navigator.userAgent;
+ if(navigator.clipboard?.writeText)navigator.clipboard.writeText(result).then(()=>note("Результат скопирован")).catch(()=>note(result));
+ else note(result);
+};
+window.addEventListener("pagehide",()=>{if(active)active.pause();Object.values(urls).forEach(URL.revokeObjectURL);});
+})();
+</script>
+</main></body></html>
