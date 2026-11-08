@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow"><title>CIRA AD-02 | iPhone Replay Isolation</title>
+<style>
+:root{font-family:-apple-system,system-ui,sans-serif;color:#1a3640;background:#fbf8f2}*{box-sizing:border-box}body{margin:0;padding:20px 14px 40px}main{max-width:650px;margin:auto}h1{font:700 23px/1.25 Georgia,serif;margin-bottom:8px}p{line-height:1.5;font-size:15px}section{border:1px solid #ded9ce;border-radius:14px;background:white;padding:16px;margin:14px 0}h2{font-size:18px;margin:0 0 8px}button{border:0;border-radius:9px;background:#163743;color:#fff;padding:12px 15px;min-height:46px;font-size:15px;font-weight:700;margin:6px 6px 5px 0}button:disabled{opacity:.45}button.clip{background:#a44637}select{width:100%;max-width:360px;padding:12px;border-radius:9px;border:1px solid #aaa;font-size:17px;background:white}small,.sub{color:#56646b;font-size:13px;display:block;line-height:1.4}pre{background:#e9eeec;padding:12px;border-radius:9px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}.counter{display:block;font-weight:bold;font-variant-numeric:tabular-nums;margin-top:4px}.notice{background:#fff4df;border-left:4px solid #d39629;padding:12px;border-radius:5px}
+</style></head><body><main>
+<h1>CIRA · AD-02 · iPhone Replay QA</h1>
+<p>Точная проверка способа повторного запуска. <strong>Во всех режимах один и тот же MP3 из TTS Gateway</strong>, без тишины, без WAV и без новой генерации при повторных нажатиях.</p>
+<section>
+<label for="phrase"><strong>Слово для проверки</strong></label>
+<select id="phrase"><option value="el aceite">el aceite · глава 1</option><option value="el tono">el tono · глава 4</option><option value="la correa">la correa · глава 4</option><option value="el sur">el sur · глава 1</option></select>
+<p><button id="load">1. Загрузить MP3</button></p><small id="load-status">После загрузки проверь сначала L (старый механизм). Между запусками жди завершения звука.</small>
+</section>
+<section><h2>L — Старый AD-02</h2>
+<small>Один аудиоэлемент, 180 мс беззвучного воспроизведения, перемотка в 0, задержка 45 мс, повторный play(). Аналогично опубликованной главе 4.</small>
+<button data-mode="l" disabled>▶ Listen · L</button><button data-clip="l" class="clip" disabled>Начало обрезало</button>
+<span class="counter" id="count-l">0 запусков · 0 обрезаний</span>
+</section>
+<section><h2>R — Повторное использование без прогрева</h2>
+<small>Один аудиоэлемент, без беззвучного запуска. Есть сброс времени и повторное назначение MP3.</small>
+<button data-mode="r" disabled>▶ Listen · R</button><button data-clip="r" class="clip" disabled>Начало обрезало</button>
+<span class="counter" id="count-r">0 запусков · 0 обрезаний</span>
+</section>
+<section><h2>N — Новый аудиоэлемент</h2>
+<small>Каждое нажатие создаёт новый элемент, запускает тот же MP3 сразу, без перемотки или прогрева. Аналогично независимому успешному тесту.</small>
+<button data-mode="n" disabled>▶ Listen · N</button><button data-clip="n" class="clip" disabled>Начало обрезало</button>
+<span class="counter" id="count-n">0 запусков · 0 обрезаний</span>
+</section>
+<section><h2>Результат</h2><p class="sub">Начни с L, прослушай его 10 раз, затем R и N. Нажимай «Начало обрезало», только когда дефект услышан.</p>
+<pre id="log">Готов к загрузке.</pre><button id="copy" disabled>Скопировать отчёт</button></section>
+<p class="notice">Тест не изменяет Ghost, Cloudflare Pages или R2. Он использует существующий аудиокеш Gateway. Если L обрезает, а R и N нет — проблема в беззвучном прогреве и перемотке, а не в MP3.</p>
+<script>
+(()=>{"use strict";
+const api="https://cira-tts-gateway.cira-learning.workers.dev/club-tts";
+const $=s=>document.querySelector(s);
+let url="",sharedL=null,sharedR=null,active=null,playing=false,requestToken=0,cacheState="",lastMode="";
+const tally={l:{plays:0,clips:0},r:{plays:0,clips:0},n:{plays:0,clips:0}},log=[];
+const sleep=t=>new Promise(r=>setTimeout(r,t));
+function update(message){log.push(message);$("#log").textContent=log.slice(-14).join("\n");}
+function count(m){const v=tally[m];$("#count-"+m).textContent=v.plays+" запусков · "+v.clips+" обрезаний";}
+function stopSound(){
+ if(active){try{active.pause();}catch(e){}}
+ active=null;playing=false;
+}
+function setupShared(){
+ for(const v of [sharedL,sharedR])if(v){try{v.pause();v.removeAttribute("src");v.load()}catch(e){}}
+ sharedL=new Audio();sharedR=new Audio();sharedL.preload="auto";sharedR.preload="auto";
+}
+$("#load").onclick=async()=>{
+ const key=$("#phrase").value;
+ requestToken++;const token=requestToken;
+ $("#load").disabled=true;stopSound();setupShared();
+ for(const m of ["l","r","n"]){tally[m]={plays:0,clips:0};count(m)}
+ $("#load-status").textContent="Получаю MP3 для "+key+"…";
+ try{
+  const r=await fetch(api,{method:"POST",mode:"cors",cache:"no-store",headers:{"Content-Type":"application/json"},body:JSON.stringify({text:key,lang:"es"})});
+  if(!r.ok)throw Error("HTTP "+r.status);
+  const blob=await r.blob();if(blob.size<100)throw Error("Пустой аудиофайл");
+  if(token!==requestToken)return;
+  if(url)URL.revokeObjectURL(url);url=URL.createObjectURL(blob);
+  cacheState=r.headers.get("X-CIRA-Cache")||"?";
+  $("#load-status").textContent="Загружен один MP3 ("+Math.round(blob.size/1024)+" КБ; R2 "+cacheState+").";
+  document.querySelectorAll("[data-mode],[data-clip]").forEach(b=>b.disabled=false);
+  $("#copy").disabled=false;update("Загружено «"+key+"», R2 "+cacheState+". Сначала 10 запусков L.");
+ }catch(e){$("#load-status").textContent="Ошибка: "+e.message}finally{$("#load").disabled=false}
+};
+async function ready(a){
+ if(a.readyState>=3)return;
+ await new Promise((resolve,reject)=>{
+  let timer;
+  const clean=()=>{clearTimeout(timer);a.removeEventListener("canplay",yes);a.removeEventListener("error",no)};
+  const yes=()=>{clean();resolve()},no=()=>{clean();reject(Error("Media not ready"))};
+  a.addEventListener("canplay",yes,{once:true});a.addEventListener("error",no,{once:true});timer=setTimeout(no,8000);
+ });
+}
+document.querySelectorAll("[data-mode]").forEach(button=>button.onclick=async()=>{
+ if(!url)return;
+ const mode=button.dataset.mode;
+ if(playing){stopSound()}
+ const a=mode==="l"?sharedL:mode==="r"?sharedR:new Audio();
+ active=a;playing=true;lastMode=mode;
+ tally[mode].plays++;count(mode);update(mode.toUpperCase()+" #"+tally[mode].plays+" — слушайте первое «e»");
+ document.querySelectorAll("[data-mode]").forEach(b=>b.disabled=true);
+ try{
+  if(mode==="l"){
+   a.pause();a.src=url;a.load();await ready(a);
+   a.playbackRate=1;a.currentTime=0;a.muted=true;
+   await a.play();await sleep(180);
+   if(active!==a)return;
+   a.pause();a.currentTime=0;a.muted=false;await sleep(45);
+   if(active!==a)return;
+   await a.play();
+  }else if(mode==="r"){
+   a.pause();a.src=url;a.load();await ready(a);
+   a.playbackRate=1;a.currentTime=0;a.muted=false;
+   await a.play();
+  }else{
+   a.src=url;a.preload="auto";a.playsInline=true;await a.play();
+  }
+  a.onended=()=>{if(active===a){active=null;playing=false;document.querySelectorAll("[data-mode]").forEach(b=>b.disabled=false)}};
+ }catch(e){update("Ошибка "+mode.toUpperCase()+": "+e.message);if(active===a){active=null;playing=false}}
+ finally{if(!playing)document.querySelectorAll("[data-mode]").forEach(b=>b.disabled=false)}
+});
+document.querySelectorAll("[data-clip]").forEach(b=>b.onclick=()=>{
+ const m=b.dataset.clip;if(!tally[m].plays || tally[m].clips>=tally[m].plays)return;
+ tally[m].clips++;count(m);update("ОБРЕЗАНО "+m.toUpperCase()+" ("+tally[m].clips+"/"+tally[m].plays+")");
+});
+$("#phrase").onchange=()=>{if(url){stopSound();url&&URL.revokeObjectURL(url);url="";document.querySelectorAll("[data-mode],[data-clip]").forEach(b=>b.disabled=true);$("#load-status").textContent="Нужно загрузить аудио выбранного выражения."}};
+$("#copy").onclick=()=>{
+ const report="CIRA AD-02 replay test\nPhrase: "+$("#phrase").value+"\n"+["l","r","n"].map(m=>m.toUpperCase()+": "+tally[m].clips+" clipped / "+tally[m].plays+" plays").join("\n")+"\nR2: "+cacheState+"\n"+navigator.userAgent;
+ navigator.clipboard?.writeText(report).then(()=>update("Скопировано")).catch(()=>update(report));
+};
+window.addEventListener("pagehide",()=>{stopSound();if(url)URL.revokeObjectURL(url)});
+})();
+</script></main></body></html>
